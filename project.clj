@@ -63,8 +63,12 @@
 
   :profiles
   {:dev
-   {:dependencies [[binaryage/devtools "1.0.2"]]
-    :source-paths ["dev"]}
+   {:dependencies [[binaryage/devtools "1.0.2"]
+                   [cider/cider-nrepl "0.24.0"]]
+
+    :source-paths ["dev"]
+
+    }
 
    :prod {}
    
