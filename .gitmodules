@@ -1,0 +1,3 @@
+[submodule "deps/cljs-web3-next"]
+	path = deps/cljs-web3-next
+	url = git@github.com:udwig/cljs-web3-next.git

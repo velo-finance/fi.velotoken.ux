@@ -5,8 +5,7 @@
    [fi.velotoken.ux.events :as events]
    [fi.velotoken.ux.views :as views]
    [fi.velotoken.ux.config :as config]
-   ))
-
+   [io.degenshephard.re-frame.web3-fx]))
 
 (defn dev-setup []
   (when config/debug?

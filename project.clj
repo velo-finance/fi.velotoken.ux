@@ -6,10 +6,11 @@
                                org.clojure/google-closure-library-third-party]]
                  [thheller/shadow-cljs "2.11.7"]
                  [reagent "0.10.0"]
-                 [re-frame "1.1.2"]]
+                 [re-frame "1.1.2"]
+                 [cljsjs/web3 "0.19.0-0"]
+                 ]
 
   :plugins [[lein-shadow "0.3.1"]
-            
             [lein-shell "0.5.0"]]
 
   :min-lein-version "2.9.0"
@@ -18,14 +19,14 @@
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
 
-
   :shadow-cljs {:nrepl {:port 8777}
                 
                 :builds {:app {:target :browser
                                :output-dir "resources/public/js/compiled"
                                :asset-path "/js/compiled"
                                :modules {:app {:init-fn fi.velotoken.ux.core/init
-                                               :preloads [devtools.preload]}}
+                                               :preloads [devtools.preload
+                                                          re-frisk.preload]}}
 
                                :devtools {:http-root "resources/public"
                                           :http-port 8280
@@ -64,7 +65,9 @@
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "1.0.2"]
-                   [cider/cider-nrepl "0.24.0"]]
+                   [cider/cider-nrepl "0.24.0"]
+                   [re-frisk "1.3.4"]
+                   ]
 
     :source-paths ["dev"]
 
