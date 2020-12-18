@@ -5,7 +5,7 @@
    [fi.velotoken.ux.events :as events]
    [fi.velotoken.ux.views :as views]
    [fi.velotoken.ux.config :as config]
-   [fi.velotoken.ux.web3-fx]
+   [fi.velotoken.ux.web3.fx]
    [fi.velotoken.ux.coingecko]
    
    ))
