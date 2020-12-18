@@ -8,14 +8,13 @@
    [cljs.core.async.interop :refer-macros [<p!]]
    ))
 
-(defn connect-to-metamask []
-  (re-frame/dispatch [::events/web3-connect]))
-
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
     [:div
      [:h1 "VELO Token " @name]
-     [:p "Connect to metamask " [:a {:href "#" :on-click connect-to-metamask} "Click here"] ] ]))
+     [:p "Connect to metamask " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-connect])} "Click here"]]
+     [:p "Add token " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-add-token])} "Click here"]]
+     ]))
 
 
 

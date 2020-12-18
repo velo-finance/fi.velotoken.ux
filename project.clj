@@ -8,6 +8,7 @@
                  [reagent "0.10.0"]
                  [re-frame "1.1.2"]
                  [cljsjs/web3 "0.19.0-0"]
+                 [akiroz.re-frame/storage "0.1.4"]
                  ]
 
   :plugins [[lein-shadow "0.3.1"]
