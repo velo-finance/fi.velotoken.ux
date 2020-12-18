@@ -34,6 +34,11 @@
   (fn [_ _]
     {:web3 [:connect]}))
 
+(re-frame/reg-event-fx
+  ::web3-velo-token-data
+  (fn [_ _]
+    {:web3 [:velo-token-data]}))
+
 (re-frame/reg-event-db
   :web3-locked
   (fn [db _]

@@ -1,6 +1,7 @@
 (ns io.degenshephard.re-frame.web3-fx
   (:require
     [re-frame.core :refer [reg-fx dispatch console reg-event-db reg-event-fx]]
+    ["ethers" :as ethers]
     [cljs.core.async :refer [go]]
     [cljs.core.async.interop :refer-macros [<p!]]))
 
@@ -38,6 +39,21 @@
       (if token-watched 
         (dispatch [:web3-add-token-confirmed])
         (dispatch [:web3-add-token-rejected])))))
+
+
+(defmethod web3-method :velo-token-data [[_ _]]
+  (go 
+    (let [web3-provider (. ethers/providers -Web3Provider)
+          provider (web3-provider. js/ethereum)
+          abi ["function balanceOf(address) view returns ( uint256 )"] 
+          velo-contract (ethers/Contract. "0x98ad9b32dd10f8d8486927d846d4df8baf39abe2" (clj->js abi) provider)
+
+          balance (<p! (.balanceOf velo-contract "0x.."))
+          ]
+
+      (prn balance)
+      )
+    ))
 
 (reg-fx :web3 web3-method)
 
