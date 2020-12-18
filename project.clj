@@ -9,6 +9,9 @@
                  [re-frame "1.1.2"]
                  [cljsjs/web3 "0.19.0-0"]
                  [akiroz.re-frame/storage "0.1.4"]
+
+                 [cljs-http "0.1.46"]
+                 [camel-snake-kebab "0.4.2"]
                  ]
 
   :plugins [[lein-shadow "0.3.1"]
