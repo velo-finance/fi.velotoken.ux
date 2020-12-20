@@ -16,6 +16,8 @@
             (assoc :accounts (:accounts store)))
     :web3 [:initialize]}))
 
+;; Web3 add token
+
 (re-frame/reg-event-fx
   ::web3-add-token
   (fn [_ _]
@@ -26,6 +28,17 @@
                          :decimals 18
                          :image "https://i.ibb.co/6gN5Mxb/logo-vector-red-on-yellow.png"
                          }}]}))
+
+(re-frame/reg-event-db
+  :web3-add-token-confirmed
+  (fn [_ _]
+    (prn "web3 add token confirmed")))
+
+
+(re-frame/reg-event-db
+  :web3-add-token-rejected
+  (fn [_ _]
+    (prn "web3 add token rejected")))
 
 ;; Web3 events
 
@@ -57,9 +70,9 @@
   (fn [_ [_ chain-id]]))
 
 (re-frame/reg-event-db
-  :web3-accounts-chaned
+  :web3-accounts-changed
   (fn [_ [_ accounts]]
-     (prn "accounts-chaned" accounts)))
+     (prn "accounts-changed" accounts)))
 
 (re-frame/reg-event-db
   :web3-connected
