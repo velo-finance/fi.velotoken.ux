@@ -5,6 +5,7 @@
     [cljs.core.async :refer [go]]
     [cljs.core.async.interop :refer-macros [<p!]]
     
+    [fi.velotoken.ux.numbers :as numbers]
     [fi.velotoken.ux.web3.contract.velo-token :as velo-token]
     [fi.velotoken.ux.web3.contract.rebaser :as rebaser]))
 
@@ -48,11 +49,11 @@
     (let [velo-contract (velo-token/build)
           rebaser-contract (rebaser/build)]
 
-      (prn {:balance (<p! (.balanceOf velo-contract "0x.."))
-            :total-supply (<p! (.totalSupply velo-contract))
+      (prn {:balance (<p! (velo-token/balance-of velo-contract "0x.."))
+            :total-supply (<p! (velo-token/total-supply velo-contract))
             :velocity (<p! (rebaser/velocity rebaser-contract))
-            :velocity-relative (<p! (.getRelativeVelocity rebaser-contract))
-            :last-rebase (<p! (.lastRebase rebaser-contract))
+            :velocity-relative (<p! (rebaser/relative-velocity rebaser-contract))
+            :last-rebase (<p! (rebaser/last-rebase rebaser-contract))
             }))))
 
 (reg-fx :web3 web3-method)

@@ -13,15 +13,11 @@
     (ethers/Contract. (:rebaser addresses) (clj->js abi) provider)))
 
 ;; Interface
+(defn velocity [^ethers/Contract c]
+  (-> c .getVelocity))
 
-(defn bn->float [n]
-  n)
+(defn relative-velocity [^ethers/Contract c]
+  (-> c .getRelativeVelocity))
 
-(defn velocity [c]
-  (-> c .getVelocity bn->float))
-
-(defn relative-velocity [c]
-  )
-
-(defn last-rebase [c]
-  )
+(defn last-rebase [^ethers.Contract c]
+  (-> c .lastRebase))

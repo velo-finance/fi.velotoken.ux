@@ -13,10 +13,11 @@
 
 
 ;; Interface
-(defn balance-of [c account]
+(defn balance-of [^ethers/Contract c account]
+  (-> c (.balanceOf account))
   )
 
-(defn total-supply [c]
-  )
+(defn total-supply [^ethers/Contract c]
+  (-> c .totalSupply))
 
 
