@@ -29,14 +29,13 @@
        [:div.social-sidebar
         (letfn [(item [t u]
                   [:a {:href u} [:img {:src (str "/images/socials/" t)}]])]
-        [:ul
-         [:li (item "telegram.svg" "#")]
-         [:li (item "medium.svg" "#")]
-         [:li (item "discord.svg" "#")]
-         [:li (item "github.svg" "#")]
-         [:li (item "reddit.svg" "#")]
-         ])
-        ] 
+          [:ul
+           [:li (item "telegram.svg" "#")]
+           [:li (item "medium.svg" "#")]
+           [:li (item "discord.svg" "#")]
+           [:li (item "github.svg" "#")]
+           [:li (item "reddit.svg" "#")]
+           ])] 
 
        [:div.price-section
         [:div.section
@@ -78,11 +77,33 @@
            [:li (item "dextools.svg" "#")]
            [:li (item "coingecko.svg" "#")]
            [:li (item "coinmarketcap.svg" "#")]
-           ])
+           ])]]
+      
+      
+      [:div.rebase-section
+       [:div.section
+         [:div.title "12H VELOCITY REBASE"]
+         [:div.body 
+          [:div.gauges.grid.halves
+           [:div.gauge.velocity.column
+            [:div.title "VELOCITY"]
+            [:div.value "13.4833%"]]
+           [:div.gauge.countdown.column
+            [:div.title "COUNTDOWN"]
+            [:div.value "12:44:13"]] ]
 
-        ]
+          [:div.rebase-button-section.grid.thirds
+           [:div.rocket.0.column
+            [:img {:src "/images/rocket-bg-0.svg"}]]
+           [:div.rebase-button.column
+            [:a {:href "#"} "REBASE"]]
+           [:div.rocket.1.column
+            [:img {:src "/images/rocket-bg-1.svg"}]]]]]
 
-       ]] 
+       ]
+      
+      
+      ] 
      ]))
 
 

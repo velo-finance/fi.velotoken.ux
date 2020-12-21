@@ -69,10 +69,6 @@ body {
     .sidebar();
     justify-content: flex-start;
   }
-
-
-
-
 }
 
 .section {
@@ -130,7 +126,6 @@ body {
 	&.red {
 	  color: #D0021B;
 	}
-
 	&.green {
 	  color: #7ED321;
 	}
@@ -143,9 +138,44 @@ body {
 	  font-size: 47.2px;
 	}
       }
+
+      &.velocity,&.countdown {
+	.value {
+	  font-size: 22.48px;
+	  color: #FFFFFF;
+	  letter-spacing: 1.45px;
+	}
+      }
     }
   }
 }
 
+.rebase-section {
+  .rebase-button-section {
+    margin-top: 40px;
+    .rocket,.rebase-button {
+      display: flex;
+      justify-content: center;
+    }
 
+    .rocket {
+      margin-top: -25px;
+    }
+
+    .rebase-button {
+      a {
+	border: 2px solid #FF0927;
+	border-radius: 12px;
+	padding: 8px 35px;
+	font-family: SourceCodePro-Bold;
+
+	font-size: 17.98px;
+	color: #FFFFFF;
+	letter-spacing: 1.16px;
+	text-align: center;
+	text-decoration: none;
+      }
+    }
+  }
+}
 

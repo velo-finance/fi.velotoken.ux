@@ -480,3 +480,31 @@ template {
 .section .body .gauge.vlo-token-price .value {
   font-size: 47.2px;
 }
+.section .body .gauge.velocity .value,
+.section .body .gauge.countdown .value {
+  font-size: 22.48px;
+  color: #FFFFFF;
+  letter-spacing: 1.45px;
+}
+.rebase-section .rebase-button-section {
+  margin-top: 40px;
+}
+.rebase-section .rebase-button-section .rocket,
+.rebase-section .rebase-button-section .rebase-button {
+  display: flex;
+  justify-content: center;
+}
+.rebase-section .rebase-button-section .rocket {
+  margin-top: -25px;
+}
+.rebase-section .rebase-button-section .rebase-button a {
+  border: 2px solid #FF0927;
+  border-radius: 12px;
+  padding: 8px 35px;
+  font-family: SourceCodePro-Bold;
+  font-size: 17.98px;
+  color: #FFFFFF;
+  letter-spacing: 1.16px;
+  text-align: center;
+  text-decoration: none;
+}
