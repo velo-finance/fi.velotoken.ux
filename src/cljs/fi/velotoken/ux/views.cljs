@@ -23,7 +23,42 @@
      [:div.app-content
       [:div.logo 
        [:img {:src "/images/logo+border.svg"}]]
-      ]]))
+      
+      [:div.section
+       [:div.title "TRADING / METRICS"]
+       [:div.body 
+        [:div.gauge.vlo-token-price 
+         [:div.title "VLO TOKEN PRICE"]
+         [:div.value.green "$0.01454"]]
+        [:div.gauges.grid.halves.price-change
+         [:div.gauge.column
+          [:div.title "1D CHANGE"]
+          [:div.value.red "-31.94%"]]
+         [:div.gauge.column
+          [:div.title "7D CHANGE"]
+          [:div.value.green "+100.94%"]]
+         ]
+
+        [:div.seperator]
+
+        [:div.gauges.grid.thirds
+         [:div.gauge.column
+          [:div.title "VOLUME"]
+          [:div.value "$124.252"]]
+         
+         [:div.gauge.column
+          [:div.title "MARKET CAP"]
+          [:div.value "$644.7K"]]
+
+         [:div.gauge.column
+          [:div.title "TOTAL SUPPLY"]
+          [:div.value "45.7M VLO"]]
+
+
+         ]
+        
+        ]]] 
+     ]))
 
 
 

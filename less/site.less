@@ -21,9 +21,85 @@ body {
 }
 
 .logo {
-  padding-top: 100px;
+  padding-top: 60px;
+  padding-bottom: 50px;
   img {
     display: block;
     margin: 0px auto;
   }
 }
+
+.section {
+  .title {
+    font-family: SourceCodePro-Black;
+    font-size: 22.48px;
+    color: #9B9B9B;
+    letter-spacing: 1.45px;
+    text-align: center;
+    text-shadow: -2px -2px 5px #000000;
+    
+    text-shadow: -2px -2px 5px #000000, 2px 2px 5px #000000, 0px 2px 5px #000000, 2px 0px 5px #000000;
+
+    margin: 10px auto;
+  }
+
+  .body {
+    padding: 16px;
+    background: rgba(0,0,0,0.60);
+    border: 3px solid #4A4A4A;
+    border-radius: 16px;
+
+    width: 450px;
+    margin: 0px auto;
+
+    .gauges.price-change {
+      padding: 0 100px;
+    }
+
+    .seperator {
+      background: #4a4a4a;
+      height: 1px;
+      margin-top: 14px;
+      margin-bottom: 4px;
+      margin-left: -16px;
+      margin-right: -16px;
+    }
+
+    .gauge {
+      .title {
+	font-family: SourceCodePro-Bold;
+	color: #F8E71C;
+	letter-spacing: 0.87px;
+	text-align: center;
+	font-size: 13.49px;
+	margin-bottom: 13px;
+      }
+      .value {
+	margin-top: -10px;
+	font-family: SourceCodePro-Medium;
+	color: #FFF;
+	letter-spacing: 3.04px;
+	text-align: center;
+	font-size: 16px;
+	&.red {
+	  color: #D0021B;
+	}
+
+	&.green {
+	  color: #7ED321;
+	}
+      }
+
+
+      &.vlo-token-price {
+	margin-top: -5px;
+	.value {
+	  font-size: 47.2px;
+	}
+      }
+    }
+  }
+}
+
+
+
