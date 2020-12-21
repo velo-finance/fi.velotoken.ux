@@ -7,7 +7,9 @@
     
     [fi.velotoken.ux.numbers :as numbers]
     [fi.velotoken.ux.web3.contract.velo-token :as velo-token]
-    [fi.velotoken.ux.web3.contract.rebaser :as rebaser]))
+    [fi.velotoken.ux.web3.contract.rebaser :as rebaser]
+    
+    [fi.velotoken.ux.coingecko :as coingecko]))
 
 
 ;; Web3 FX

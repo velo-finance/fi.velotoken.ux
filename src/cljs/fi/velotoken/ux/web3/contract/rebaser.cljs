@@ -3,7 +3,7 @@
     ["ethers" :as ethers]
 
     [fi.velotoken.ux.web3.provider :refer [provider]]
-    [fi.velotoken.ux.web3.config :refer [addresses]]))
+    [fi.velotoken.ux.config :refer [addresses]]))
 
 (defn build []
  (let [provider (provider)

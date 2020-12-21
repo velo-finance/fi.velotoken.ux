@@ -7,15 +7,16 @@
                  [thheller/shadow-cljs "2.11.7"]
                  [reagent "0.10.0"]
                  [re-frame "1.1.2"]
-                 [cljsjs/web3 "0.19.0-0"]
                  [akiroz.re-frame/storage "0.1.4"]
-
                  [cljs-http "0.1.46"]
-                 [camel-snake-kebab "0.4.2"]
-                 ]
+                 [camel-snake-kebab "0.4.2"]]
 
   :plugins [[lein-shadow "0.3.1"]
-            [lein-shell "0.5.0"]]
+            [lein-shell "0.5.0"]
+            [lein-less "1.7.5"]]
+
+  :less {:source-paths ["less"]
+         :target-path  "resources/public/css"}
 
   :min-lein-version "2.9.0"
 
@@ -81,4 +82,4 @@
    
 }
 
-  :prep-tasks [])
+  :prep-tasks [["less" "once"]])
