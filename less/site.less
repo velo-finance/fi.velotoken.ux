@@ -29,6 +29,52 @@ body {
   }
 }
 
+.main-section {
+  .sidebar {
+    display: flex;
+    align-items: center;
+    ul {
+      display: inline-block;
+      list-style-type: none;
+      padding: 10px;
+      padding-top: 50px;
+      margin: 0;
+
+      li {
+	padding: 4px;
+	margin-bottom: 14px;
+	opacity: 0.4;
+	&:hover {
+	  opacity: 1.0;
+	}
+      }
+    }
+  }
+
+  display: flex;
+
+  .social-sidebar {
+    flex: 1;
+    .sidebar();
+    justify-content: flex-end;
+
+  }
+
+  .price-section {
+    flex: 1;
+  }
+
+  .trading-sidebar {
+    flex: 1;
+    .sidebar();
+    justify-content: flex-start;
+  }
+
+
+
+
+}
+
 .section {
   .title {
     font-family: SourceCodePro-Black;
@@ -37,7 +83,7 @@ body {
     letter-spacing: 1.45px;
     text-align: center;
     text-shadow: -2px -2px 5px #000000;
-    
+
     text-shadow: -2px -2px 5px #000000, 2px 2px 5px #000000, 0px 2px 5px #000000, 2px 0px 5px #000000;
 
     margin: 10px auto;

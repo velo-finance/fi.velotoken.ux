@@ -356,6 +356,73 @@ template {
   display: block;
   margin: 0px auto;
 }
+.main-section {
+  display: flex;
+}
+.main-section .sidebar {
+  display: flex;
+  align-items: center;
+}
+.main-section .sidebar ul {
+  display: inline-block;
+  list-style-type: none;
+  padding: 10px;
+  padding-top: 50px;
+  margin: 0;
+}
+.main-section .sidebar ul li {
+  padding: 4px;
+  margin-bottom: 14px;
+  opacity: 0.4;
+}
+.main-section .sidebar ul li:hover {
+  opacity: 1.0;
+}
+.main-section .social-sidebar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.main-section .social-sidebar ul {
+  display: inline-block;
+  list-style-type: none;
+  padding: 10px;
+  padding-top: 50px;
+  margin: 0;
+}
+.main-section .social-sidebar ul li {
+  padding: 4px;
+  margin-bottom: 14px;
+  opacity: 0.4;
+}
+.main-section .social-sidebar ul li:hover {
+  opacity: 1.0;
+}
+.main-section .price-section {
+  flex: 1;
+}
+.main-section .trading-sidebar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.main-section .trading-sidebar ul {
+  display: inline-block;
+  list-style-type: none;
+  padding: 10px;
+  padding-top: 50px;
+  margin: 0;
+}
+.main-section .trading-sidebar ul li {
+  padding: 4px;
+  margin-bottom: 14px;
+  opacity: 0.4;
+}
+.main-section .trading-sidebar ul li:hover {
+  opacity: 1.0;
+}
 .section .title {
   font-family: SourceCodePro-Black;
   font-size: 22.48px;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="20px" viewBox="0 0 24 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>telegram</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Landing-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="landing-page-v3" transform="translate(-171.000000, -254.000000)" fill-rule="nonzero">
+            <g id="Socials" transform="translate(166.000000, 254.000000)">
+                <g id="telegram" transform="translate(5.000000, 0.000000)">
+                    <path d="M8.97932231,18.3349056 C8.28951052,18.3349056 8.35222069,18.0840649 8.1640902,17.4569633 L6.15736501,10.8723963 L21.5213547,1.84213297" id="Path" fill="#C8DAEA"></path>
+                    <path d="M8.97932231,18.3349056 C9.41829344,18.3349056 9.66913409,18.0840649 9.9826849,17.8332243 L12.8046422,15.1366873 L9.29287312,13.0045418" id="Path" fill="#A9C9DD"></path>
+                    <path d="M9.29287312,13.0045418 L17.758745,19.2128479 C18.6366873,19.7772393 19.3892092,19.4636885 19.6400499,18.3349056 L23.0891088,2.15568378 C23.4026596,0.776060213 22.5247173,0.148958592 21.5840649,0.587929726 L1.45410286,8.36398982 C0.137189458,8.86567112 0.137189458,9.68090322 1.20326221,9.99445403 L6.40820566,11.6249182 L18.3231365,4.03698864 C18.8875279,3.72343783 19.3892092,3.84885815 19.0129482,4.28782929" id="Path" fill="#F6FBFE"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

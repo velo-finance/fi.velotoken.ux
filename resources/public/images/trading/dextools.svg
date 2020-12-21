@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="30px" viewBox="0 0 26 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>dextools</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Landing-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="landing-page-v3" transform="translate(-641.000000, -299.000000)">
+            <g id="trading-links" transform="translate(638.000000, 251.000000)">
+                <g id="dextools" transform="translate(3.000000, 48.000000)">
+                    <polygon id="Line-3" fill="#0092AD" points="1.77635684e-13 6.56422721 1.77635684e-13 16.1413803 4.25466572 14.0058493 4.25466572 8.52953052"></polygon>
+                    <polygon id="Line" fill="#00B6D8" points="9.99201917 11.1301984 14.022542 9.12176886 4.45734474 4.48520161 1.77635684e-14 6.56422721"></polygon>
+                    <polygon id="Line" fill="#00BADC" points="25.2527246 10.5671379 25.2527246 6.40928581 21.1769605 4.33026021 16.7196158 6.40928581"></polygon>
+                    <polygon id="Line-Copy" fill="#00B3D6" points="14.2906932 5.05566334 18.4806265 3.04723381 12.9975802 -3.55271368e-14 8.80597684 2.11852552 7.31918959 3.04723381 11.3571136 5.05566334 12.899908 4.33026021"></polygon>
+                    <polygon id="Line-Copy-2" fill="#00B3C8" transform="translate(12.914027, 26.823556) scale(1, -1) translate(-12.914027, -26.823556) " points="14.3037963 29.3495414 18.4906689 27.342579 13.0116279 24.2975712 8.82308653 26.4145491 7.33738535 27.342579 11.3723597 29.3495414 12.9140271 28.7794964"></polygon>
+                    <polygon id="Line-5" fill="#00B0D0" points="21.1957283 8.5118815 0.240570012 18.8847459 4.44567362 20.7439305 25.2527246 10.5671379"></polygon>
+                    <polygon id="Rectangle" fill="#00BBDD" points="0.240570012 18.8847459 4.25466572 20.5059534 4.25466572 25.0342069 0.240570012 22.9793776"></polygon>
+                    <polygon id="Rectangle-Copy" fill="#00ADCA" points="21.1957283 15.319847 25.2527246 13.3905534 25.2527246 22.9970978 21.1957283 25.0342069"></polygon>
+                    <polygon id="Line-2" fill="#00AEC8" points="4.25466572 20.9599886 8.41995041 22.9744361 4.25466572 25.0342069"></polygon>
+                    <polygon id="Rectangle" fill="#00B0D4" points="15.7222846 18.0799254 21.3339217 20.8425234 21.3339217 25.0564557 11.4705512 20.2865204"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
