@@ -90,7 +90,7 @@
             [:div.value "13.4833%"]]
            [:div.gauge.countdown.column
             [:div.title "COUNTDOWN"]
-            [:div.value "12:44:13"]] ]
+            [:div.value "12:44:13"]]]
 
           [:div.rebase-button-section.grid.thirds
            [:div.rocket.0.column
@@ -98,13 +98,46 @@
            [:div.rebase-button.column
             [:a {:href "#"} "REBASE"]]
            [:div.rocket.1.column
-            [:img {:src "/images/rocket-bg-1.svg"}]]]]]
-
-       ]
+            [:img {:src "/images/rocket-bg-1.svg"}]]]]]]
       
-      
-      ] 
-     ]))
+      [:div.yield-farming-section
+       [:div.section
+        [:div.title "YIELD FARMING SECTION"]
+        [:div.body 
+         [:div.gauges
+          [:div.gauge.mises-legacy-pool
+           [:div.title "MISES LEGACY POOL APY"]
+           [:div.value "261.48%"]]
+         
+         [:div.gauge.total-deposited
+           [:div.title "TOTAL DEPOSITED"]
+           [:div.value "99.58k"]]
 
+         [:p "DEPOSIT VLO/ETH UNI-V2, EARN VLO"]
 
+         [:div.seperator]
 
+         [:div.gauges.grid.halves
+          [:div.gauge.velocity.column
+           [:div.title "TOTAL STAKED USD"]
+           [:div.value "20,000.00"]]
+          [:div.gauge.countdown.column
+           [:div.title "$VLO EARNED"]
+           [:div.value "~23222.64"]]]
+
+         [:div.staking-button-section.grid.halves
+          [:div.stake-button.column
+           [:a {:href "#"} "STAKE"]]
+          [:div.unstake-button.column
+           [:a {:href "#"} "UNSTAKE"]]]
+         
+         [:div.harvest-button-section.grid.ones
+          [:div.harvest-button.column
+           [:a {:href "#"} "HARVEST"]]
+          ]]]]
+       
+       ] 
+      [:div#footer]
+     ]
+
+   ]))
