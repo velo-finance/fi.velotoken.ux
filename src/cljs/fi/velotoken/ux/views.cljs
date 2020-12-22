@@ -3,26 +3,71 @@
    [re-frame.core :as re-frame]
    [fi.velotoken.ux.subs :as subs]
    [fi.velotoken.ux.events :as events]
+   [fi.velotoken.ux.format :as frm]
    [cljs.core.async :refer [go]]
    [cljs.core.async.interop :refer-macros [<p!]]
    ))
 
+(def <su re-frame/subscribe)
+(def >ev re-frame/dispatch)
 
-(defn oind []
-  [:div
-       [:h1 "VELO Token " @name]
-       [:p "Connect to metamask " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-connect])} "Click here"]]
-       [:p "Add token " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-add-token])} "Click here"]]
-       [:p "Velo Token data " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-velo-token-data])} "Click here"]]
-       ])
+;; (comment oind []
+;;   [:div
+;;        [:h1 "VELO Token " @name]
+;;        [:p "Connect to metamask " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-connect])} "Click here"]]
+;;        [:p "Add token " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-add-token])} "Click here"]]
+;;        [:p "Velo Token data " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-velo-token-data])} "Click here"]]
+;;        ])
+
+
+(defn price-section []
+  [:div.price-section
+   [:div.section
+    [:div.title "TRADING / METRICS"]
+    [:div.body 
+     [:div.gauge.vlo-token-price 
+      [:div.title "VLO TOKEN PRICE"]
+      [:div.value.green (frm/token-price  @(<su [::subs/token-price]))]]
+     [:div.gauges.grid.halves.price-change
+      (let [v  @(<su [::subs/token-1d-change])]
+        [:div.gauge.column
+         [:div.title "1D CHANGE"]
+         [:div.value {:class (if (pos? v) "green" "red")} (frm/perc v)]])
+      (let [v  @(<su [::subs/token-7d-change])]
+        [:div.gauge.column
+         [:div.title "7D CHANGE"]
+         [:div.value {:class (if (pos? v) "green" "red")} (frm/perc v)]])]
+
+     [:div.seperator]
+
+     [:div.gauges.grid.thirds
+      [:div.gauge.column
+       [:div.title " 24H VOLUME"]
+       [:div.value (frm/token-volume @(<su [::subs/token-1d-volume]))]]
+
+      [:div.gauge.column
+       [:div.title "MARKET CAP"]
+       [:div.value (frm/si-prefix @(<su [::subs/token-market-cap]))]]
+
+      [:div.gauge.column
+       [:div.title "TOTAL SUPPLY"]
+       [:div.value (frm/si-prefix @(<su [::subs/token-total-supply]))]]]
+     ]]]
+       )
 
 (defn main-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [:div.app-container
+  [:div.app-container
      [:div.app-bg]
      [:div.app-content
+      [:div#menu
+       [:ul 
+        [:li.connect [:a {:href "#" :on-click #(>ev [::events/web3-connect])} "CONNECT"]]
+        [:li.add-token [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]]
       [:div.logo 
        [:img {:src "/images/logo+border.svg"}]]
+
+      [:div.logo-title
+       [:span "VELOTOKEN"]]
       
       [:div.main-section
 
@@ -30,53 +75,23 @@
         (letfn [(item [t u]
                   [:a {:href u} [:img {:src (str "/images/socials/" t)}]])]
           [:ul
-           [:li (item "telegram.svg" "#")]
-           [:li (item "medium.svg" "#")]
-           [:li (item "discord.svg" "#")]
-           [:li (item "github.svg" "#")]
-           [:li (item "reddit.svg" "#")]
+           [:li (item "telegram.svg" "https://t.me/Velotoken")]
+           [:li (item "medium.svg" "https://medium.com/@SuperMises")]
+           [:li (item "discord.svg" "https://discord.gg/rGnnKTR")]
+           [:li (item "github.svg" "https://github.com/velo-finance/velo-protocol")]
+           [:li (item "reddit.svg" "https://www.reddit.com/r/ethtrader/comments/kgivpu/velotoken_vlo_audit_shows_high_level_security_and/")]
            ])] 
 
-       [:div.price-section
-        [:div.section
-         [:div.title "TRADING / METRICS"]
-         [:div.body 
-          [:div.gauge.vlo-token-price 
-           [:div.title "VLO TOKEN PRICE"]
-           [:div.value.green "$0.01454"]]
-          [:div.gauges.grid.halves.price-change
-           [:div.gauge.column
-            [:div.title "1D CHANGE"]
-            [:div.value.red "-31.94%"]]
-           [:div.gauge.column
-            [:div.title "7D CHANGE"]
-            [:div.value.green "+100.94%"]]
-           ]
-
-          [:div.seperator]
-
-          [:div.gauges.grid.thirds
-           [:div.gauge.column
-            [:div.title "VOLUME"]
-            [:div.value "$124.252"]]
-
-           [:div.gauge.column
-            [:div.title "MARKET CAP"]
-            [:div.value "$644.7K"]]
-
-           [:div.gauge.column
-            [:div.title "TOTAL SUPPLY"]
-            [:div.value "45.7M VLO"]]]
-          ]]]
+       [price-section]
 
        [:div.trading-sidebar
         (letfn [(item [t u]
                   [:a {:href u} [:img {:src (str "/images/trading/" t)}]])]
           [:ul
-           [:li (item "uniswap.svg" "#")]
-           [:li (item "dextools.svg" "#")]
-           [:li (item "coingecko.svg" "#")]
-           [:li (item "coinmarketcap.svg" "#")]
+           [:li (item "uniswap.svg" "https://info.uniswap.org/pair/0x259E558892783fd8941EBBeDa694318C1C3d9263")]
+           [:li (item "dextools.svg" "https://www.dextools.io/app/uniswap/pair-explorer/0x259e558892783fd8941ebbeda694318c1c3d9263")]
+           [:li (item "coingecko.svg" "https://www.coingecko.com/en/coins/velo-token")]
+           [:li (item "coinmarketcap.svg" "https://coinmarketcap.com/currencies/velo-token/")]
            ])]]
       
       
@@ -140,4 +155,4 @@
       [:div#footer]
      ]
 
-   ]))
+   ])

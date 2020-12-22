@@ -6,8 +6,7 @@
    [fi.velotoken.ux.views :as views]
    [fi.velotoken.ux.config :as config]
    [fi.velotoken.ux.web3.fx]
-   [fi.velotoken.ux.coingecko]
-   
+   [fi.velotoken.ux.coingecko-fx]
    ))
 
 (defn dev-setup []

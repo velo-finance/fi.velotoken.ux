@@ -1,6 +1,35 @@
 @import "reset/normalize";
 @import "_silver";
 
+
+.button {
+  margin-top: 20px;
+  text-align: center;
+  a {
+    display: inline-block;
+    border: 2px solid #FF0927;
+    border-radius: 12px;
+    padding: 8px 35px;
+    font-weight: 700;
+
+    font-size: 17.98px;
+    color: #FFFFFF;
+    letter-spacing: 1.16px;
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+
+  }
+
+}
+
+.button-hover-white {
+  a:hover {
+    border-color: #FFF;
+  }
+}
+
 body {
  font-family: 'Source Code Pro', monospace;
 }
@@ -21,14 +50,58 @@ body {
   // margin-top: -21px;
 }
 
+
+#menu {
+  position: absolute;
+  top:0px;
+  right: 20px;
+
+  color: white;
+  
+  ul {
+    display: inline-block;
+    list-style-type: none;
+
+    li {
+      .button();
+
+      padding: 0;
+      margin: 0;
+      margin-bottom: 10px;
+      a {
+	width: 120px;
+      }
+      &.connect {
+	a {
+	  border: 2px solid #3F7500;
+	}
+      }
+      &.add-token {
+	a {
+	  border: 2px solid #4A4A4A;
+	}
+      }
+      .button-hover-white();
+    }
+  }
+}
+
 .logo {
   padding-top: 60px;
-  padding-bottom: 50px;
+  padding-bottom: 25px;
   img {
     display: block;
     margin: 0px auto;
   }
 }
+
+.logo-title {
+  font-family: 'Audiowide', cursive;
+  color: #fff;
+  text-align: center;
+  font-size: 64px;
+}
+
 
 .main-section {
   .sidebar {
@@ -173,23 +246,6 @@ body {
 }
 
 
-.button {
-  margin-top: 20px;
-  text-align: center;
-  a {
-    display: inline-block;
-    border: 2px solid #FF0927;
-    border-radius: 12px;
-    padding: 8px 35px;
-    font-weight: 700;
-
-    font-size: 17.98px;
-    color: #FFFFFF;
-    letter-spacing: 1.16px;
-    text-align: center;
-    text-decoration: none;
-  }
-}
 
 .rebase-section {
   .rebase-button-section {
@@ -205,6 +261,7 @@ body {
 
     .rebase-button {
       .button();
+      .button-hover-white();
     }
   }
 }
@@ -223,18 +280,21 @@ body {
     a {
       border: 2px solid #3F7500;
     }
+    .button-hover-white();
   }
   .unstake-button {
     .button();
     a {
       border: 2px solid #FF9F00;
     }
+    .button-hover-white();
   }
   .harvest-button {
     .button();
     a {
       border: 2px solid #BF08E6;
     }
+    .button-hover-white();
   }
 }
 

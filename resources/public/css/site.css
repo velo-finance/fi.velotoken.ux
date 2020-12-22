@@ -335,6 +335,26 @@ template {
     display: block;
   }
 }
+.button {
+  margin-top: 20px;
+  text-align: center;
+}
+.button a {
+  display: inline-block;
+  border: 2px solid #FF0927;
+  border-radius: 12px;
+  padding: 8px 35px;
+  font-weight: 700;
+  font-size: 17.98px;
+  color: #FFFFFF;
+  letter-spacing: 1.16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button-hover-white a:hover {
+  border-color: #FFF;
+}
 body {
   font-family: 'Source Code Pro', monospace;
 }
@@ -351,13 +371,61 @@ body {
   min-height: 800px;
   background: rgba(0, 0, 0, 0.35);
 }
+#menu {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  color: white;
+}
+#menu ul {
+  display: inline-block;
+  list-style-type: none;
+}
+#menu ul li {
+  margin-top: 20px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+#menu ul li a {
+  display: inline-block;
+  border: 2px solid #FF0927;
+  border-radius: 12px;
+  padding: 8px 35px;
+  font-weight: 700;
+  font-size: 17.98px;
+  color: #FFFFFF;
+  letter-spacing: 1.16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+#menu ul li a {
+  width: 120px;
+}
+#menu ul li.connect a {
+  border: 2px solid #3F7500;
+}
+#menu ul li.add-token a {
+  border: 2px solid #4A4A4A;
+}
+#menu ul li a:hover {
+  border-color: #FFF;
+}
 .logo {
   padding-top: 60px;
-  padding-bottom: 50px;
+  padding-bottom: 25px;
 }
 .logo img {
   display: block;
   margin: 0px auto;
+}
+.logo-title {
+  font-family: 'Audiowide', cursive;
+  color: #fff;
+  text-align: center;
+  font-size: 64px;
 }
 .main-section {
   display: flex;
@@ -505,22 +573,6 @@ body {
   letter-spacing: 1.45px;
   text-align: center;
 }
-.button {
-  margin-top: 20px;
-  text-align: center;
-}
-.button a {
-  display: inline-block;
-  border: 2px solid #FF0927;
-  border-radius: 12px;
-  padding: 8px 35px;
-  font-weight: 700;
-  font-size: 17.98px;
-  color: #FFFFFF;
-  letter-spacing: 1.16px;
-  text-align: center;
-  text-decoration: none;
-}
 .rebase-section .rebase-button-section {
   margin-top: 40px;
 }
@@ -547,6 +599,10 @@ body {
   letter-spacing: 1.16px;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
+}
+.rebase-section .rebase-button-section .rebase-button a:hover {
+  border-color: #FFF;
 }
 .yield-farming-section p {
   font-weight: 700;
@@ -570,9 +626,13 @@ body {
   letter-spacing: 1.16px;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
 }
 .yield-farming-section .stake-button a {
   border: 2px solid #3F7500;
+}
+.yield-farming-section .stake-button a:hover {
+  border-color: #FFF;
 }
 .yield-farming-section .unstake-button {
   margin-top: 20px;
@@ -589,9 +649,13 @@ body {
   letter-spacing: 1.16px;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
 }
 .yield-farming-section .unstake-button a {
   border: 2px solid #FF9F00;
+}
+.yield-farming-section .unstake-button a:hover {
+  border-color: #FFF;
 }
 .yield-farming-section .harvest-button {
   margin-top: 20px;
@@ -608,9 +672,13 @@ body {
   letter-spacing: 1.16px;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
 }
 .yield-farming-section .harvest-button a {
   border: 2px solid #BF08E6;
+}
+.yield-farming-section .harvest-button a:hover {
+  border-color: #FFF;
 }
 #footer {
   height: 200px;

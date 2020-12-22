@@ -14,7 +14,15 @@
  (fn [{:keys [store]} _]
    {:db (-> db/default-db
             (assoc :accounts (:accounts store)))
+    :coingecko [:update]
     :web3 [:initialize]}))
+
+
+;; Coingecko update
+(re-frame/reg-event-db
+  ::coingecko-update
+  (fn [db [_ info]]
+    (assoc db :coingecko info)))
 
 ;; Web3 add token
 
