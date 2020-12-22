@@ -335,6 +335,9 @@ template {
     display: block;
   }
 }
+body {
+  font-family: 'Source Code Pro', monospace;
+}
 .app-bg {
   background: #000000 50% no-repeat url(/images/bg-desktop-optimized.jpg);
   position: fixed;
@@ -427,7 +430,7 @@ template {
   margin-top: 50px;
 }
 .section .title {
-  font-family: SourceCodePro-Black;
+  font-weight: 900;
   font-size: 22.48px;
   color: #9B9B9B;
   letter-spacing: 1.45px;
@@ -455,7 +458,7 @@ template {
   margin-right: -16px;
 }
 .section .body .gauge .title {
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   color: #F8E71C;
   letter-spacing: 0.87px;
   text-align: center;
@@ -464,7 +467,7 @@ template {
 }
 .section .body .gauge .value {
   margin-top: -10px;
-  font-family: SourceCodePro-Medium;
+  font-weight: 500;
   color: #FFF;
   letter-spacing: 3.04px;
   text-align: center;
@@ -489,14 +492,14 @@ template {
   letter-spacing: 1.45px;
 }
 .section .body .gauge.mises-legacy-pool .value {
-  font-family: SourceCodePro-Medium;
+  font-weight: 500;
   font-size: 47.2px;
   color: #FFFFFF;
   letter-spacing: 3.04px;
   text-align: center;
 }
 .section .body .gauge.total-deposited .value {
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   font-size: 22.48px;
   color: #FFFFFF;
   letter-spacing: 1.45px;
@@ -511,7 +514,7 @@ template {
   border: 2px solid #FF0927;
   border-radius: 12px;
   padding: 8px 35px;
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   font-size: 17.98px;
   color: #FFFFFF;
   letter-spacing: 1.16px;
@@ -538,7 +541,7 @@ template {
   border: 2px solid #FF0927;
   border-radius: 12px;
   padding: 8px 35px;
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   font-size: 17.98px;
   color: #FFFFFF;
   letter-spacing: 1.16px;
@@ -546,7 +549,7 @@ template {
   text-decoration: none;
 }
 .yield-farming-section p {
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   font-size: 12px;
   color: #9B9B9B;
   letter-spacing: 0.77px;
@@ -561,7 +564,7 @@ template {
   border: 2px solid #FF0927;
   border-radius: 12px;
   padding: 8px 35px;
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   font-size: 17.98px;
   color: #FFFFFF;
   letter-spacing: 1.16px;
@@ -580,7 +583,7 @@ template {
   border: 2px solid #FF0927;
   border-radius: 12px;
   padding: 8px 35px;
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   font-size: 17.98px;
   color: #FFFFFF;
   letter-spacing: 1.16px;
@@ -599,7 +602,7 @@ template {
   border: 2px solid #FF0927;
   border-radius: 12px;
   padding: 8px 35px;
-  font-family: SourceCodePro-Bold;
+  font-weight: 700;
   font-size: 17.98px;
   color: #FFFFFF;
   letter-spacing: 1.16px;
