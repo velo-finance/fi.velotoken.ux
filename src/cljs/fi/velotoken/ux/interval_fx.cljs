@@ -10,12 +10,19 @@
 
 (def registered-keys (atom nil))
 
-(reg-fx
-  :dispatch-interval
-  (fn [{:keys [:dispatch :ms :id] :as config}]
+(defn register-interval [{:keys [:dispatch :ms :id] :as config}]
     (s/assert ::dispatch-interval-args config)
     (let [interval-id (js/setInterval #(re-frame/dispatch dispatch) ms)]
-      (swap! registered-keys assoc id interval-id))))
+      (swap! registered-keys assoc id interval-id)))
+
+(reg-fx
+  :dispatch-interval
+  register-interval)
+
+(reg-fx :dispatch-interval-multiple
+        (fn [intervals]
+          (doseq [i intervals]
+            (register-interval i))))
 
 (reg-fx
   :clear-interval

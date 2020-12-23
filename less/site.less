@@ -61,12 +61,46 @@ body {
 }
 
 
+#flash {
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+  padding: 20px 15px;
+  text-align: center;
+  span {
+    display: block;
+    padding: 4px 15px;
+    border-radius: 12px;
+  }
+  &.error {
+    span {
+      background-color: red;
+      color: white;
+    }
+  }
+
+  &.warning {
+    span {
+      background-color: orange;
+      color: black;
+    }
+  }
+
+  &.notice {
+    span {
+      background-color: green;
+      color: white;
+    }
+  }
+}
+
+
 .connect-wallet {
   display: flex;
   flex-direction: column;
   .message {
     font-size: 12px;
-    color: green;
+    color: green !important;
   } 
 }
 
@@ -267,6 +301,12 @@ body {
 
 
 .rebase-section {
+
+    .message {
+      color: white;
+      text-align: center;
+      padding-top: 10px;
+    }
   .rebase-button-section {
     margin-top: 40px;
     .rocket,.rebase-button {
@@ -278,9 +318,17 @@ body {
       margin-top: -25px;
     }
 
+
     .rebase-button {
       .button();
       .button-hover-white();
+    }
+
+
+    .rebase-button-wrapper {
+      display: flex;
+      flex-direction: column; 
+
     }
   }
 }

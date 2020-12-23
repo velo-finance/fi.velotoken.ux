@@ -380,13 +380,37 @@ body {
   padding: 4px 15px;
   border-radius: 12px;
 }
+#flash {
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+  padding: 20px 15px;
+  text-align: center;
+}
+#flash span {
+  display: block;
+  padding: 4px 15px;
+  border-radius: 12px;
+}
+#flash.error span {
+  background-color: red;
+  color: white;
+}
+#flash.warning span {
+  background-color: orange;
+  color: black;
+}
+#flash.notice span {
+  background-color: green;
+  color: white;
+}
 .connect-wallet {
   display: flex;
   flex-direction: column;
 }
 .connect-wallet .message {
   font-size: 12px;
-  color: green;
+  color: green !important;
 }
 #menu {
   position: absolute;
@@ -590,6 +614,11 @@ body {
   letter-spacing: 1.45px;
   text-align: center;
 }
+.rebase-section .message {
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+}
 .rebase-section .rebase-button-section {
   margin-top: 40px;
 }
@@ -620,6 +649,10 @@ body {
 }
 .rebase-section .rebase-button-section .rebase-button a:hover {
   border-color: #FFF;
+}
+.rebase-section .rebase-button-section .rebase-button-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 .yield-farming-section p {
   font-weight: 700;

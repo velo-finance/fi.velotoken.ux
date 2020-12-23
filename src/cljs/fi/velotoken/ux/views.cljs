@@ -1,6 +1,7 @@
 (ns fi.velotoken.ux.views
   (:require
    [re-frame.core :as re-frame]
+   [reagent.core :as reagent]
    [fi.velotoken.ux.subs :as subs]
    [fi.velotoken.ux.events :as events]
    [fi.velotoken.ux.format :as frm]
@@ -54,7 +55,7 @@
        [:div.value (frm/si-prefix @(<su [::subs/token-total-supply]))]]]
      ]]])
 
-(defn cond-value [subscription placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
+(defn cond-value-sub [subscription placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
   (if-let [v @(<su [subscription])] 
     (fmtfn v)
     [:div.connect-wallet 
@@ -62,36 +63,70 @@
      [:span.message "CONNECT WALLET"]])
   )
 
+
+(defn cond-value [v placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
+  (if [v] 
+    (fmtfn v)
+    [:div.connect-wallet 
+     [:span.placeholder placeholder]
+     [:span.message "CONNECT WALLET"]]))
+
+
 (defn rebase-section []
   [:div.rebase-section
-       [:div.section
-         [:div.title "12H VELOCITY REBASE"]
-         [:div.body 
-          [:div.gauges.grid.halves
-           [:div.gauge.velocity.column
-            [:div.title "VELOCITY"]
-            [:div.value 
-             [cond-value ::subs/token-velocity-relative "0.00%" {:fmtfn frm/perc}] ]]
-           [:div.gauge.countdown.column
-            [:div.title "COUNTDOWN"]
-            [:div.value 
-             [cond-value ::subs/last-rebase-countdown "00:00:00"]]]]
+   [:div.section
+    [:div.title "12H VELOCITY REBASE"]
+    [:div.body 
+     [:div.gauges.grid.halves
+      [:div.gauge.velocity.column
+       [:div.title "VELOCITY"]
+       [:div.value 
+        [cond-value-sub ::subs/token-velocity-relative "0.00%" {:fmtfn frm/perc}] ]]
+      [:div.gauge.countdown.column
+       [:div.title "COUNTDOWN"]
+       [:div.value 
+        [cond-value-sub ::subs/last-rebase-countdown "00:00:00"]]]]
 
-          [:div.rebase-button-section.grid.thirds
-           [:div.rocket.0.column
-            [:img {:src "/images/rocket-bg-0.svg"}]]
-           [:div.rebase-button.column
-            [:a {:on-click #(>ev [::events/web3-velo-token-data])} "REBASE"]]
-           [:div.rocket.1.column
-            [:img {:src "/images/rocket-bg-1.svg"}]]]]]])
+     (let [msg (reagent/atom nil)
+           messages ["Try again when the countdown has expired"
+                     "Well, what to say?"
+                     "The countdown is there for a reason mister.."
+                     "Aren't we all eager to write history!"
+                     "A bit impatient are we?"]
+           on-click #(cond
+                       @msg
+                       (reset! msg (rand-nth messages))
+                       (pos? @(<su [::subs/last-rebase-counter])) 
+                       (reset! msg "Easy tiger, wait until the countdown has passed..")
+                       :else
+                       (do
+                         (reset! msg "Are you the one?")
+                         (>ev [::events/web3-call-rebase])))]
+       [:div.wrapper 
+        [:div.rebase-button-section.grid.thirds
+         [:div.rocket.0.column
+          [:img {:src "/images/rocket-bg-0.svg"}]]
+         [:div.rebase-button-wapper.column
+          [:div.rebase-button
+           [:a {:on-click on-click} "REBASE"]]]
+         [:div.rocket.1.column
+          [:img {:src "/images/rocket-bg-1.svg"}]]]
+        [(fn []
+           (when msg
+             [:div.message @msg]))]]
+       )]]])
 
 (defn menu-section []
-  (let [eth-inj? @(<su [::subs/ethereum-injected?])]
+  (let [eth-inj? @(<su [::subs/ethereum-injected?])
+        address @(<su [::subs/web3-account-connected])]
     (when eth-inj?
         [:div#menu
          [:ul 
-          [:li.connect [:a {:href "#" :on-click #(>ev [::events/web3-connect])} "CONNECT"]]
-          [:li.add-token [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]])))
+          [:li.connect 
+           [:a {:href "#" :on-click #(>ev [::events/web3-connect])}
+                        (or address  "CONNECT")]]
+          [:li.add-token 
+           [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]])))
 
 
 (defn install-ethereum-compatible-wallet []
@@ -101,13 +136,21 @@
          [:span 
           "Install an ETH compatible wallet like MetaMask"]])))
 
-
+(defn flash-message []
+  (let [{:keys [message type]} @(<su [::subs/flash-message])]
+    (when message
+        [:div#flash {:class (or type "error")}
+         [:span 
+          message]])))
 
 (defn main-panel []
   [:div.app-container
      [:div.app-bg]
      [:div.app-content
+      ;; informational messages
       [install-ethereum-compatible-wallet]
+      [flash-message]
+
       [menu-section]
       [:div.logo 
        [:img {:src "/images/logo+border.svg"}]]

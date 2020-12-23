@@ -3,6 +3,7 @@
    [re-frame.core :as re-frame]
    ["moment" :as moment]
    ["moment-duration-format" :as moment-duration-format]
+   [clojure.string :as str]
    ))
 
 (re-frame/reg-sub
@@ -14,6 +15,18 @@
  ::ethereum-injected?
  (fn [db]
    (:ethereum-injected? db)))
+
+(re-frame/reg-sub
+  ::web3-account-connected
+  (fn [db]
+    (when-let [account (get-in db [:accounts 0])]
+      (-> (subs account 0 8)
+          str/lower-case))))
+
+(re-frame/reg-sub
+ ::flash-message
+ (fn [db]
+   (-> db :flash)))
 
 (re-frame/reg-sub
   ::token-price
@@ -59,9 +72,16 @@
 
 ;; Rebase
 (re-frame/reg-sub
+  ::last-rebase-counter
+  (fn [db]
+    (-> db :last-rebase-counter)))
+
+(re-frame/reg-sub
   ::last-rebase-countdown
   (fn [db]
     (when-let [last-rebase-counter (-> db :last-rebase-counter)]
-      (let [m (.duration moment last-rebase-counter "seconds")]
-        (.format m "HH:mm:ss")))))
+      (if (pos? last-rebase-counter)
+        (let [m (.duration moment  last-rebase-counter "seconds")]
+          (.format m "HH:mm:ss"))
+        "00:00:00"))))
 
