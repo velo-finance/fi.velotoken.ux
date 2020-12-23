@@ -2,6 +2,9 @@
   (:require
     ["ethers" :as ethers]
 
+    [oops.core :refer [oget oset! ocall oapply ocall! oapply!
+                       oget+ oset!+ ocall+ oapply+ ocall!+ oapply!+]]
+
     [fi.velotoken.ux.web3.provider :refer [provider]]
     [fi.velotoken.ux.config :refer [addresses]]))
 
@@ -14,10 +17,11 @@
 
 ;; Interface
 (defn velocity [^ethers/Contract c]
-  (-> c .getVelocity))
+  (ocall c :getVelocity))
 
 (defn relative-velocity [^ethers/Contract c]
-  (-> c .getRelativeVelocity))
+  (ocall c :getRelativeVelocity))
 
 (defn last-rebase [^ethers.Contract c]
-  (-> c .lastRebase))
+  (ocall c :lastRebase))
+

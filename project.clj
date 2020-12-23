@@ -10,7 +10,8 @@
                  [akiroz.re-frame/storage "0.1.4"]
                  [cljs-http "0.1.46"]
                  [camel-snake-kebab "0.4.2"]
-                 [com.andrewmcveigh/cljs-time "0.5.2"]]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
+                 [binaryage/oops "0.7.0"]]
 
   :plugins [[lein-shadow "0.3.1"]
             [lein-shell "0.5.0"]
