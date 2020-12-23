@@ -52,17 +52,63 @@
       [:div.gauge.column
        [:div.title "TOTAL SUPPLY"]
        [:div.value (frm/si-prefix @(<su [::subs/token-total-supply]))]]]
-     ]]]
-       )
+     ]]])
+
+(defn cond-value [subscription placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
+  (if-let [v @(<su [subscription])] 
+    (fmtfn v)
+    [:div.connect-wallet 
+     [:span.placeholder placeholder]
+     [:span.message "CONNECT WALLET"]])
+  )
+
+(defn rebase-section []
+  [:div.rebase-section
+       [:div.section
+         [:div.title "12H VELOCITY REBASE"]
+         [:div.body 
+          [:div.gauges.grid.halves
+           [:div.gauge.velocity.column
+            [:div.title "VELOCITY"]
+            [:div.value 
+             [cond-value ::subs/token-velocity-relative "0.00%" {:fmtfn frm/perc}] ]]
+           [:div.gauge.countdown.column
+            [:div.title "COUNTDOWN"]
+            [:div.value 
+             [cond-value ::subs/last-rebase-countdown "00:00:00"]]]]
+
+          [:div.rebase-button-section.grid.thirds
+           [:div.rocket.0.column
+            [:img {:src "/images/rocket-bg-0.svg"}]]
+           [:div.rebase-button.column
+            [:a {:on-click #(>ev [::events/web3-velo-token-data])} "REBASE"]]
+           [:div.rocket.1.column
+            [:img {:src "/images/rocket-bg-1.svg"}]]]]]])
+
+(defn menu-section []
+  (let [eth-inj? @(<su [::subs/ethereum-injected?])]
+    (when eth-inj?
+        [:div#menu
+         [:ul 
+          [:li.connect [:a {:href "#" :on-click #(>ev [::events/web3-connect])} "CONNECT"]]
+          [:li.add-token [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]])))
+
+
+(defn install-ethereum-compatible-wallet []
+  (let [eth-inj? @(<su [::subs/ethereum-injected?])]
+    (when-not eth-inj?
+        [:div#install-ethereum-compatible-wallet
+         [:span 
+          "Install an ETH compatible wallet like MetaMask"]])))
+
+
 
 (defn main-panel []
   [:div.app-container
      [:div.app-bg]
      [:div.app-content
-      [:div#menu
-       [:ul 
-        [:li.connect [:a {:href "#" :on-click #(>ev [::events/web3-connect])} "CONNECT"]]
-        [:li.add-token [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]]
+      [install-ethereum-compatible-wallet]
+      [menu-section]
       [:div.logo 
        [:img {:src "/images/logo+border.svg"}]]
 
@@ -94,26 +140,7 @@
            [:li (item "coinmarketcap.svg" "https://coinmarketcap.com/currencies/velo-token/")]
            ])]]
       
-      
-      [:div.rebase-section
-       [:div.section
-         [:div.title "12H VELOCITY REBASE"]
-         [:div.body 
-          [:div.gauges.grid.halves
-           [:div.gauge.velocity.column
-            [:div.title "VELOCITY"]
-            [:div.value "13.4833%"]]
-           [:div.gauge.countdown.column
-            [:div.title "COUNTDOWN"]
-            [:div.value "12:44:13"]]]
-
-          [:div.rebase-button-section.grid.thirds
-           [:div.rocket.0.column
-            [:img {:src "/images/rocket-bg-0.svg"}]]
-           [:div.rebase-button.column
-            [:a {:href "#"} "REBASE"]]
-           [:div.rocket.1.column
-            [:img {:src "/images/rocket-bg-1.svg"}]]]]]]
+      [rebase-section]
       
       [:div.yield-farming-section
        [:div.section

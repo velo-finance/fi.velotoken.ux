@@ -1,6 +1,9 @@
 (ns fi.velotoken.ux.subs
   (:require
-   [re-frame.core :as re-frame]))
+   [re-frame.core :as re-frame]
+   ["moment" :as moment]
+   ["moment-duration-format" :as moment-duration-format]
+   ))
 
 (re-frame/reg-sub
  ::name
@@ -8,10 +11,14 @@
    (:name db)))
 
 (re-frame/reg-sub
+ ::ethereum-injected?
+ (fn [db]
+   (:ethereum-injected? db)))
+
+(re-frame/reg-sub
   ::token-price
   (fn [db]
     (-> db :coingecko :usd)))
-
 
 (re-frame/reg-sub
   ::token-1d-change
@@ -38,3 +45,23 @@
   ::token-total-supply
   (fn [db]
     (-> db :coingecko :total-supply)))
+
+(re-frame/reg-sub
+  ::token-velocity-relative
+  (fn [db]
+    (-> db :rebase-data :velocity-relative)))
+
+(re-frame/reg-sub
+  ::token-last-rebase
+  (fn [db]
+    (-> db :rebase-data :last-rebase)))
+
+
+;; Rebase
+(re-frame/reg-sub
+  ::last-rebase-countdown
+  (fn [db]
+    (when-let [last-rebase-counter (-> db :last-rebase-counter)]
+      (let [m (.duration moment last-rebase-counter "seconds")]
+        (.format m "HH:mm:ss")))))
+

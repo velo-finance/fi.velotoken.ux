@@ -7,6 +7,7 @@
    [fi.velotoken.ux.config :as config]
    [fi.velotoken.ux.web3.fx]
    [fi.velotoken.ux.coingecko-fx]
+   [fi.velotoken.ux.interval-fx]
    ))
 
 (defn dev-setup []

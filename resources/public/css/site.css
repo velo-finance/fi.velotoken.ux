@@ -371,6 +371,23 @@ body {
   min-height: 800px;
   background: rgba(0, 0, 0, 0.35);
 }
+#install-ethereum-compatible-wallet {
+  padding: 20px 15px;
+  text-align: center;
+}
+#install-ethereum-compatible-wallet span {
+  background-color: orange;
+  padding: 4px 15px;
+  border-radius: 12px;
+}
+.connect-wallet {
+  display: flex;
+  flex-direction: column;
+}
+.connect-wallet .message {
+  font-size: 12px;
+  color: green;
+}
 #menu {
   position: absolute;
   top: 0px;
