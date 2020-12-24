@@ -115,7 +115,8 @@
 (defn build [vlo-price-usd]
   {:vlo-price-usd vlo-price-usd
    :vlo-c (vlo-c/build)
-   :uve-c (uve-c/build)})
+   :uve-c (uve-c/build)
+   :mlp-c (mlp-c/build)})
 
 (defn total-liquidity-usd 
   "Total amount of liquidity in the UNI-V2 VLO ETH Pool" 
@@ -127,7 +128,7 @@
 ;; double checked an working
 #_ (go (prn (<! (total-liquidity-usd (build 0.0067)))))
 
-(defn total-staked 
+(defn total-staked-usd
   "Total amount staked in the Mises Legacy Pool"
   [{:keys [uve-c] :as c}]
   (go 
@@ -138,6 +139,36 @@
         (* (/ balance total-supply) 
            (<! (total-liquidity-usd c)))))))
 
-#_ (go (prn (<! (total-staked (build 0.0067)))))
+#_ (go (prn (<! (total-staked-usd (build 0.0067)))))
+
+(defn x-perc-rate [{:keys [vlo-price-usd uve-c mlp-c] :as c} period-in-seconds]
+  (go 
+    (let [total-staked (<! (total-staked-usd c))
+          ;; calculate reward rate when staking 100K extra
+          ;; in the pool
+          reward-rate-vlo (<p-float! (mlp-c/reward-rate mlp-c))
+          reward-rate-vlo (* (/ 100000 (+ total-staked 100000))
+                             reward-rate-vlo)]
+      (/ (* reward-rate-vlo vlo-price-usd period-in-seconds)
+         100000))))
+
+#_ (go (prn (<! (x-perc-rate (build 0.0067) (* 365 24 60 60)))))
+
+(defn daily-perc-rate [c]
+  (x-perc-rate c (* 24 60 60)))
+
+#_ (go (prn (<! (daily-perc-rate (build 0.0067)))))
+
+(defn annual-perc-rate [c]
+  (x-perc-rate c (* 365 24 60 60)))
+
+#_ (go (prn (<! (annual-perc-rate (build 0.0067)))))
+
+(defn annual-perc-yield [c]
+  (go
+    (let [dpr (<! (daily-perc-rate c))]
+       (- (Math/pow (+ 1.0 dpr) 365) 1))))
+
+#_ (go (prn (<! (annual-perc-yield (build 0.0167)))))
 
 

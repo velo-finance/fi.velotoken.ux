@@ -30,6 +30,9 @@
 (def build-signer (partial -build true))
 
 
+(defn reward-rate [^ethers.Contract c]
+  (ocall c :rewardRate))
+
 (defn velocity [^ethers/Contract c]
   (ocall c :getVelocity))
 
