@@ -76,7 +76,7 @@
 ;;     APY = (1+DPR)^365 
 
 ;; USER STATS
-;; * TOTAL STAKED USD
+;; * STAKED USD
 ;;  
 ;;  we get the balance in the 
 ;;  staked-usd = (mlp-c.balance / mlp-c.totalSupply) * total-staked-usd
@@ -171,4 +171,26 @@
 
 #_ (go (prn (<! (annual-perc-yield (build 0.0167)))))
 
+(defn staked-usd 
+  "the amount of usd this address has staked in the pool" 
+  [{:keys [mlp-c] :as c} address]
+  (go
+    (let [total-staked (<! (total-staked-usd c))
+          balance (<p-float! (mlp-c/balance-of mlp-c address))
+          total-supply (<p-float! (mlp-c/total-supply mlp-c))]
+      (prn total-staked balance total-supply)
+      (if (zero? total-supply)
+        0.0
+        (* (/ balance total-supply) total-staked)))))
+
+;; 11479390
+#_ (go (prn (<! (staked-usd (build 0.0167) "0x..."))))
+
+(defn vlo-earned [{:keys [mlp-c vlo-c] :as c} address]
+  (go 
+    (let [earned (<p-float! (mlp-c/earned mlp-c address))
+          scaling-factor (<p-float! (vlo-c/scaling-factor vlo-c))]
+      (* earned scaling-factor))))
+
+#_ (go (prn (<! (vlo-earned (build 0.0167) "0x..."))))
 

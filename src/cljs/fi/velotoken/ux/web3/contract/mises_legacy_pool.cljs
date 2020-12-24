@@ -29,19 +29,23 @@
 (def build (partial -build false))
 (def build-signer (partial -build true))
 
+(defn balance-of [^ethers/Contract c account]
+  (ocall c :balanceOf account))
+
+(defn earned [^ethers/Contract c account]
+  (ocall c :earned account))
+
+(defn total-supply [^ethers/Contract c]
+  (ocall c :totalSupply))
 
 (defn reward-rate [^ethers.Contract c]
   (ocall c :rewardRate))
 
-(defn velocity [^ethers/Contract c]
-  (ocall c :getVelocity))
 
-(defn relative-velocity [^ethers/Contract c]
-  (ocall c :getRelativeVelocity))
 
-(defn last-rebase [^ethers.Contract c]
-  (ocall c :lastRebase))
 
-(defn rebase [^ethers.Contract c]
-  (ocall c :rebase))
+
+
+
+
 

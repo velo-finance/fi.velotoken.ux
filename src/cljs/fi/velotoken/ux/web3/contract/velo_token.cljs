@@ -23,4 +23,7 @@
 (defn total-supply [^ethers/Contract c]
   (ocall c :totalSupply))
 
+(defn scaling-factor [^ethers/Contract c]
+  (ocall c :velosScalingFactor))
+
 
