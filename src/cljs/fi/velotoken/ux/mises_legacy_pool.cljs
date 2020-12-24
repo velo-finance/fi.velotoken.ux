@@ -186,11 +186,11 @@
 ;; 11479390
 #_ (go (prn (<! (staked-usd (build 0.0167) "0x..."))))
 
-(defn vlo-earned [{:keys [mlp-c vlo-c] :as c} address]
+(defn earned-vlo [{:keys [mlp-c vlo-c] :as c} address]
   (go 
     (let [earned (<p-float! (mlp-c/earned mlp-c address))
           scaling-factor (<p-float! (vlo-c/scaling-factor vlo-c))]
       (* earned scaling-factor))))
 
-#_ (go (prn (<! (vlo-earned (build 0.0167) "0x..."))))
+#_ (go (prn (<! (earned-vlo (build 0.0167) "0x..."))))
 

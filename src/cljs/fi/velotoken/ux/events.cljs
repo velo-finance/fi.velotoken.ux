@@ -61,8 +61,19 @@
 (re-frame/reg-event-db
   ::web3-velo-rebase-data-recv
   (fn [db [_ data]]
-    (prn data)
     (assoc db :rebase-data data)))
+
+(re-frame/reg-event-fx 
+  ::web3-mises-legacy-pool-data
+  (fn [_ _]
+    {:web3 [:velo-rebase-data]}))
+
+(re-frame/reg-event-db
+  ::web3-mises-legacy-pool-data-recv
+  (fn [db [_ data]]
+    (prn data)
+    (assoc db :mises-legacy-pool-data data)))
+
 
 (re-frame/reg-event-db
   ::update-last-rebase-counter

@@ -8,16 +8,12 @@
     [oops.core :refer [oget ocall]]
 
     [fi.velotoken.ux.events :as events]
-    
     [fi.velotoken.ux.numbers :as numbers]
-
     [fi.velotoken.ux.web3.provider :refer [provider]]
-
     [fi.velotoken.ux.web3.contract.velo-token :as velo-token]
     [fi.velotoken.ux.web3.contract.rebaser :as rebaser]
-    
-    [fi.velotoken.ux.coingecko :as coingecko]))
-
+    [fi.velotoken.ux.coingecko :as coingecko]
+    [fi.velotoken.ux.mises-legacy-pool :as mises-legacy-pool]))
 
 ;; Web3 FX
 
@@ -73,6 +69,18 @@
         (dispatch [::events/web3-add-token-confirmed])
         (dispatch [::events/web3-add-token-rejected])))))
 
+(defmethod web3-method :mises-legacy-pool-data [[_ {:keys [velo-price address]}]]
+  (go 
+    (let [mlp (mises-legacy-pool/build velo-price)]
+      (dispatch [::events/web3-mises-legacy-pool-data-recv
+                 (cond->  {:apy (<! (mises-legacy-pool/annual-perc-yield mlp))
+                           :apr (<! (mises-legacy-pool/annual-perc-rate mlp))
+                           :total-staked (<! (mises-legacy-pool/total-staked-usd mlp)) }
+                    (seq address) 
+                    (assoc :staked-usd (<! (mises-legacy-pool/staked-usd mlp address))
+                           :earned-vlo (<! (mises-legacy-pool/earned-vlo mlp address))))])))) 
+
+#_ (web3-method [:mises-legacy-pool-data {:velo-price 0.0167 :address "0x.."}])
 
 (defmethod web3-method :velo-rebase-data [[_ _]]
   (go
