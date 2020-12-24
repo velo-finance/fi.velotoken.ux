@@ -80,6 +80,8 @@
                     (assoc :staked-usd (<! (mises-legacy-pool/staked-usd mlp address))
                            :earned-vlo (<! (mises-legacy-pool/earned-vlo mlp address))))])))) 
 
+
+#_ (web3-method [:mises-legacy-pool-data {:velo-price 0.0167}])
 #_ (web3-method [:mises-legacy-pool-data {:velo-price 0.0167 :address "0x.."}])
 
 (defmethod web3-method :velo-rebase-data [[_ _]]
