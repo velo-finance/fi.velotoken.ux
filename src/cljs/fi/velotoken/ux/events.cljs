@@ -31,7 +31,11 @@
      ;; reload rebase-data each x seconds
      {:dispatch [::web3-velo-rebase-data]
       :id :flash-update
-      :ms 5000 }
+      :ms 10000 }
+     ;; reload coingecko-data each x seconds
+     {:dispatch [::coingecko-sync]
+      :id :flash-update
+      :ms 10000 }
      ] 
 
     }))
@@ -87,6 +91,12 @@
 
 
 ;; Coingecko update
+
+(re-frame/reg-event-fx
+  ::coingecko-sync
+  (fn [_ [_ info]]
+    {:coingecko [:update]}))
+
 (re-frame/reg-event-db
   ::coingecko-update
   (fn [db [_ info]]

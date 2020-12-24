@@ -162,7 +162,7 @@
 
        [:div.social-sidebar
         (letfn [(item [t u]
-                  [:a {:href u} [:img {:src (str "/images/socials/" t)}]])]
+                  [:a {:href u :target t} [:img {:src (str "/images/socials/" t)}]])]
           [:ul
            [:li (item "telegram.svg" "https://t.me/Velotoken")]
            [:li (item "medium.svg" "https://medium.com/@SuperMises")]
@@ -175,7 +175,7 @@
 
        [:div.trading-sidebar
         (letfn [(item [t u]
-                  [:a {:href u} [:img {:src (str "/images/trading/" t)}]])]
+                  [:a {:href u :target t} [:img {:src (str "/images/trading/" t)}]])]
           [:ul
            [:li (item "uniswap.svg" "https://info.uniswap.org/pair/0x259E558892783fd8941EBBeDa694318C1C3d9263")]
            [:li (item "dextools.svg" "https://www.dextools.io/app/uniswap/pair-explorer/0x259e558892783fd8941ebbeda694318c1c3d9263")]
@@ -195,7 +195,7 @@
            [:div.value "261.48%"]]
          
          [:div.gauge.total-deposited
-           [:div.title "TOTAL DEPOSITED"]
+           [:div.title "TOTAL STAKED"]
            [:div.value "99.58k"]]
 
          [:p "DEPOSIT VLO/ETH UNI-V2, EARN VLO"]
@@ -204,7 +204,7 @@
 
          [:div.gauges.grid.halves
           [:div.gauge.velocity.column
-           [:div.title "TOTAL STAKED USD"]
+           [:div.title "STAKED USD"]
            [:div.value "20,000.00"]]
           [:div.gauge.countdown.column
            [:div.title "$VLO EARNED"]

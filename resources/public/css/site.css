@@ -491,7 +491,7 @@ body {
   opacity: 1.0;
 }
 .main-section .social-sidebar {
-  flex: 1;
+  flex: 5;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -515,7 +515,7 @@ body {
   flex: 1;
 }
 .main-section .trading-sidebar {
-  flex: 1;
+  flex: 5;
   display: flex;
   align-items: center;
   justify-content: flex-start;
