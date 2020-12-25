@@ -39,8 +39,8 @@
      ;; NOTE: disabled, as we are firing the legacy
      ;; pool data update event after coingecko update
      #_ {:dispatch [::web3-mises-legacy-pool-data]
-      :id :mises-legacy-pool-update
-      :ms 10000 }] 
+         :id :mises-legacy-pool-update
+         :ms 10000 }] 
     }))
 
 (re-frame/reg-event-fx
@@ -178,7 +178,8 @@
   [(inject-cofx :store)]
   (fn [{:keys [store db]} [_ accounts]]
     {:db (assoc db :accounts accounts)
-     :store (assoc store :accounts accounts)}
+     :store (assoc store :accounts accounts)
+     :dispatch [::web3-mises-legacy-pool-data]}
     ))
 
 (re-frame/reg-event-db

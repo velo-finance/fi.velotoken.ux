@@ -654,6 +654,11 @@ body {
   display: flex;
   flex-direction: column;
 }
+.yield-farming-section .connect-message {
+  color: #4a4a4a;
+  text-align: center;
+  margin-top: 15px;
+}
 .yield-farming-section p {
   font-weight: 700;
   font-size: 12px;
@@ -729,6 +734,57 @@ body {
 }
 .yield-farming-section .harvest-button a:hover {
   border-color: #FFF;
+}
+.yield-farming-section .cancel-button {
+  margin-top: 20px;
+  text-align: center;
+}
+.yield-farming-section .cancel-button a {
+  display: inline-block;
+  border: 2px solid #FF0927;
+  border-radius: 12px;
+  padding: 8px 35px;
+  font-weight: 700;
+  font-size: 17.98px;
+  color: #FFFFFF;
+  letter-spacing: 1.16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.yield-farming-section .cancel-button a {
+  border: 2px solid #4a4a4a;
+}
+.yield-farming-section .cancel-button a:hover {
+  border-color: #FFF;
+}
+.yield-farming-section .stake-section {
+  text-align: center;
+}
+.yield-farming-section .stake-section .input-field {
+  width: 80%;
+  margin: 20px auto 0px auto;
+}
+.yield-farming-section .stake-section .input-field .balance {
+  color: #9B9B9B;
+  text-align: left ;
+  padding-left: 20px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.yield-farming-section .stake-section .input-field .balance:hover {
+  color: white;
+}
+.yield-farming-section .stake-section .input-field input {
+  width: auto;
+  background: none;
+  border: 2px solid #4a4a4a;
+  border-radius: 12px;
+  font-size: 24px;
+  color: white;
+  text-align: right;
+  padding: 5px 20px;
 }
 #footer {
   height: 200px;

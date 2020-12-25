@@ -78,7 +78,9 @@
                            :total-staked (<! (mises-legacy-pool/total-staked-usd mlp)) }
                     (seq address) 
                     (assoc :staked-usd (<! (mises-legacy-pool/staked-usd mlp address))
-                           :earned-vlo (<! (mises-legacy-pool/earned-vlo mlp address))))])))) 
+                           :earned-vlo (<! (mises-legacy-pool/earned-vlo mlp address))
+                           :balance-uve-lp-tokens
+                           (<! (mises-legacy-pool/balance-uve-lp-tokens mlp address))))])))) 
 
 
 #_ (web3-method [:mises-legacy-pool-data {:velo-price 0.0167}])

@@ -5,6 +5,9 @@
 (defn to-number [bn]
   (.toNumber bn))
 
+(defn to-fixed-number [bn u]
+  (fixed-number/from-value bn u))
+
 (defn to-unsafe-float 
   "takes a bignumberish and a unit size and unsafely
   converts it to a javascript float"

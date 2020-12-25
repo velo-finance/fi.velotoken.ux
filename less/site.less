@@ -334,6 +334,11 @@ body {
 }
 
 .yield-farming-section {
+  .connect-message {
+    color: #4a4a4a;
+    text-align: center;
+    margin-top: 15px;
+  }
   p {
     font-weight: 700;
     font-size: 12px;
@@ -362,6 +367,46 @@ body {
       border: 2px solid #BF08E6;
     }
     .button-hover-white();
+  }
+
+  .cancel-button {
+    .button();
+    a {
+      border: 2px solid #4a4a4a;
+    }
+    .button-hover-white();
+  }
+
+  .stake-section {
+
+    text-align: center;
+
+    .input-field {
+      width: 80%;
+      margin: 20px auto 0px auto;
+
+      .balance {
+	color: #9B9B9B;
+	text-align: left ;
+	padding-left: 20px;
+	margin-bottom: 5px;
+	font-size: 12px;
+	cursor: pointer;
+	&:hover { color: white; }
+      }
+
+      input {
+	width: auto;
+	background: none;
+	border: 2px solid #4a4a4a;
+	border-radius: 12px;
+	font-size: 24px;
+	color: white;
+	text-align: right;
+	padding: 5px 20px;
+      }
+
+    }
   }
 }
 

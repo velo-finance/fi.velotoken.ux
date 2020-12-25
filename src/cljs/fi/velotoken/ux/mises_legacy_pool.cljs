@@ -3,6 +3,8 @@
     [cljs.core.async :refer [go]]
     [cljs.core.async.interop :refer-macros [<p!]]
 
+    [oops.core :refer [ocall]]
+
     [fi.velotoken.ux.web3.contract.velo-token :as vlo-c]
     [fi.velotoken.ux.web3.contract.uniswap-vlo-eth :as uve-c]
     [fi.velotoken.ux.web3.contract.mises-legacy-pool :as mlp-c]
@@ -10,7 +12,7 @@
     [fi.velotoken.ux.config :refer [addresses]]
 
     [fi.velotoken.ux.numbers :refer [to-unsafe-float]]
-    [fi.velotoken.ux.utils :refer-macros [<p-float!]]))
+    [fi.velotoken.ux.utils :refer-macros [<p-float! <p-fixed-number!]]))
 
 ;; Abstraction over the Mises Legacy Pool, brings together:
 ;;   a. MisesLegacyPool
@@ -193,4 +195,14 @@
       (* earned scaling-factor))))
 
 #_ (go (prn (<! (earned-vlo (build 0.0167) "0x..."))))
+
+
+;; NOTE: the to string conversion of the fixed-number
+(defn balance-uve-lp-tokens [{:keys [uve-c]} address]
+  (go (ocall (<p-fixed-number! (uve-c/balance-of uve-c  address))
+             :toString)))
+
+#_ (go (prn (<! (balance-uve-lp-tokens (build 0.0167) "0x..."))))
+
+
 

@@ -17,6 +17,11 @@
    (:ethereum-injected? db)))
 
 (re-frame/reg-sub
+ ::connected?
+ (fn [db]
+   (seq (:accounts db))))
+
+(re-frame/reg-sub
   ::web3-account-connected
   (fn [db]
     (when-let [account (get-in db [:accounts 0])]

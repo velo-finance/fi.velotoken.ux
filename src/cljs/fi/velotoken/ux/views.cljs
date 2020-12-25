@@ -143,6 +143,20 @@
          [:span 
           message]])))
 
+(defn stake-section [selected balance]
+  [:div.stake-section
+   [:div.seperator]
+   [:div.input-field
+    [:div.balance 
+     [:a {:on-click #()} "BALANCE " [:span balance]]]
+    [:input {:type "text" :value "0.00"}]
+   [:div.grid.halves 
+    [:div.cancel-button.column
+     [:a {:on-click #(reset! selected nil)} "CANCEL"]]
+    [:div.stake-button.column
+     [:a {:on-click #()} "STAKE"]]
+    ]]])
+
 (defn yield-farming-section []
   ;; {:apy 0.6332610195499611, 
   ;;  :apr 0.49090847085091577, 
@@ -164,28 +178,43 @@
          [:div.title "TOTAL STAKED"]
          [:div.value (frm/money (:total-staked mlp-data))]]
 
-        [:p "DEPOSIT VLO/ETH UNI-V2, EARN VLO"]
+        [:p "STAKE VLO/ETH UNI-V2, EARN VLO"]
 
         [:div.seperator]
 
-        [:div.gauges.grid.halves
-         [:div.gauge.velocity.column
-          [:div.title "STAKED USD"]
-          [:div.value (frm/money (:staked-usd mlp-data))]]
-         [:div.gauge.countdown.column
-          [:div.title "$VLO EARNED"]
-          [:div.value (frm/si-prefix (:earned-vlo mlp-data))]]]
+        (if-not @(<su [::subs/connected?])
+          [:div.connect-message "CONNECT WALLET TO STAKE"]
+          [:div
+           [:div.gauges.grid.halves
+            [:div.gauge.velocity.column
+             [:div.title "STAKED USD"]
+             [:div.value (frm/money (:staked-usd mlp-data))]]
+            [:div.gauge.countdown.column
+             [:div.title "$VLO EARNED"]
+             [:div.value (frm/si-prefix (:earned-vlo mlp-data))]]]
 
-        [:div.staking-button-section.grid.halves
-         [:div.stake-button.column
-          [:a {:href "#"} "STAKE"]]
-         [:div.unstake-button.column
-          [:a {:href "#"} "UNSTAKE"]]]
 
-        [:div.harvest-button-section.grid.ones
-         [:div.harvest-button.column
-          [:a {:href "#"} "HARVEST"]]
-         ]]]]]))
+           (let [selected (reagent/atom nil)]
+             [:div.buttons 
+
+              [(fn []
+                 (case @selected
+                   :stake [stake-section selected (:balance-uve-lp-tokens mlp-data)]
+                   nil))]
+
+              [(fn []
+                 (if-not @selected 
+                   [:div.buttons
+                    [:div.staking-button-section.grid.halves
+                     [:div.stake-button.column
+                      [:a {:on-click #(reset! selected :stake)} "STAKE"]]
+                     [:div.unstake-button.column
+                      [:a {:href "#"} "UNSTAKE"]]]
+
+                    [:div.harvest-button-section.grid.ones
+                     [:div.harvest-button.column
+                      [:a {:href "#"} "HARVEST"]]
+                     ]]))]])])]]]]))
 
 
 (defn main-panel []
