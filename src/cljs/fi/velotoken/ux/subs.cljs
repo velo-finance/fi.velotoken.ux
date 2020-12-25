@@ -69,6 +69,11 @@
   (fn [db]
     (-> db :rebase-data :last-rebase)))
 
+;; MisesLegacyPool
+(re-frame/reg-sub 
+  ::mises-legacy-pool-data
+  (fn [db]
+    (-> db :mises-legacy-pool-data)))
 
 ;; Rebase
 (re-frame/reg-sub

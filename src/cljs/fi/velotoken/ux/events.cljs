@@ -34,10 +34,13 @@
       :ms 10000 }
      ;; reload coingecko-data each x seconds
      {:dispatch [::coingecko-sync]
-      :id :flash-update
+      :id ::coingecko-update
       :ms 10000 }
-     ] 
-
+     ;; NOTE: disabled, as we are firing the legacy
+     ;; pool data update event after coingecko update
+     #_ {:dispatch [::web3-mises-legacy-pool-data]
+      :id :mises-legacy-pool-update
+      :ms 10000 }] 
     }))
 
 (re-frame/reg-event-fx
@@ -46,7 +49,8 @@
     {:db (-> db 
              (assoc :ethereum-injected? true)
              (assoc :accounts accounts))
-     :web3-multiple [[:velo-rebase-data]]}))
+     :dispatch [::web3-mises-legacy-pool-data]
+     :web3-multiple [[:velo-rebase-data] ]}))
 
 (re-frame/reg-event-db
   ::web3-ethereum-not-present
@@ -65,8 +69,9 @@
 
 (re-frame/reg-event-fx 
   ::web3-mises-legacy-pool-data
-  (fn [_ _]
-    {:web3 [:velo-rebase-data]}))
+  (fn [{:keys [db]} _]
+    {:web3 [:mises-legacy-pool-data {:velo-price (-> db :coingecko :usd) 
+                                     :address (get-in db [:accounts 0])}]}))
 
 (re-frame/reg-event-db
   ::web3-mises-legacy-pool-data-recv
@@ -108,10 +113,13 @@
   (fn [_ [_ info]]
     {:coingecko [:update]}))
 
-(re-frame/reg-event-db
+;; After price we want the legacy pool to
+;; update
+(re-frame/reg-event-fx
   ::coingecko-update
-  (fn [db [_ info]]
-    (assoc db :coingecko info)))
+  (fn [{:keys [db]} [_ info]]
+    {:db (assoc db :coingecko info)
+     :dispatch [::web3-mises-legacy-pool-data]}))
 
 ;; Web3 add token
 (re-frame/reg-event-fx

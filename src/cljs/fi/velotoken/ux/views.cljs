@@ -143,6 +143,51 @@
          [:span 
           message]])))
 
+(defn yield-farming-section []
+  ;; {:apy 0.6332610195499611, 
+  ;;  :apr 0.49090847085091577, 
+  ;;  :staked-usd 5718.047050293853, 
+  ;;  :total-staked 55570.135820930554, 
+  ;;  :earned-vlo 24127.77788713968
+  ;;  }
+  (let [mlp-data @(<su [::subs/mises-legacy-pool-data])]
+    [:div.yield-farming-section
+     [:div.section
+      [:div.title "YIELD FARMING SECTION"]
+      [:div.body 
+       [:div.gauges
+        [:div.gauge.mises-legacy-pool
+         [:div.title "MISES LEGACY POOL APY"]
+         [:div.value (frm/perc (* 100 (:apy mlp-data)))]]
+
+        [:div.gauge.total-deposited
+         [:div.title "TOTAL STAKED"]
+         [:div.value (frm/money (:total-staked mlp-data))]]
+
+        [:p "DEPOSIT VLO/ETH UNI-V2, EARN VLO"]
+
+        [:div.seperator]
+
+        [:div.gauges.grid.halves
+         [:div.gauge.velocity.column
+          [:div.title "STAKED USD"]
+          [:div.value (frm/money (:staked-usd mlp-data))]]
+         [:div.gauge.countdown.column
+          [:div.title "$VLO EARNED"]
+          [:div.value (frm/si-prefix (:earned-vlo mlp-data))]]]
+
+        [:div.staking-button-section.grid.halves
+         [:div.stake-button.column
+          [:a {:href "#"} "STAKE"]]
+         [:div.unstake-button.column
+          [:a {:href "#"} "UNSTAKE"]]]
+
+        [:div.harvest-button-section.grid.ones
+         [:div.harvest-button.column
+          [:a {:href "#"} "HARVEST"]]
+         ]]]]]))
+
+
 (defn main-panel []
   [:div.app-container
      [:div.app-bg]
@@ -185,43 +230,8 @@
       
       [rebase-section]
       
-      [:div.yield-farming-section
-       [:div.section
-        [:div.title "YIELD FARMING SECTION"]
-        [:div.body 
-         [:div.gauges
-          [:div.gauge.mises-legacy-pool
-           [:div.title "MISES LEGACY POOL APY"]
-           [:div.value "261.48%"]]
-         
-         [:div.gauge.total-deposited
-           [:div.title "TOTAL STAKED"]
-           [:div.value "99.58k"]]
+      [yield-farming-section]
 
-         [:p "DEPOSIT VLO/ETH UNI-V2, EARN VLO"]
-
-         [:div.seperator]
-
-         [:div.gauges.grid.halves
-          [:div.gauge.velocity.column
-           [:div.title "STAKED USD"]
-           [:div.value "20,000.00"]]
-          [:div.gauge.countdown.column
-           [:div.title "$VLO EARNED"]
-           [:div.value "~23222.64"]]]
-
-         [:div.staking-button-section.grid.halves
-          [:div.stake-button.column
-           [:a {:href "#"} "STAKE"]]
-          [:div.unstake-button.column
-           [:a {:href "#"} "UNSTAKE"]]]
-         
-         [:div.harvest-button-section.grid.ones
-          [:div.harvest-button.column
-           [:a {:href "#"} "HARVEST"]]
-          ]]]]
-       
-       ] 
       [:div#footer]
      ]
 
