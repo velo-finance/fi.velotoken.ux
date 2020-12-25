@@ -2,6 +2,8 @@
   (:require
    [re-frame.core :as re-frame]
    [reagent.core :as reagent]
+   [reagent-forms.core :refer [bind-fields]]
+
    [fi.velotoken.ux.subs :as subs]
    [fi.velotoken.ux.events :as events]
    [fi.velotoken.ux.format :as frm]
@@ -143,19 +145,19 @@
          [:span 
           message]])))
 
-(defn stake-section [selected balance]
+(defn stake-section [doc selected balance]
   [:div.stake-section
    [:div.seperator]
-   [:div.input-field
+   [bind-fields  [:div.input-field
     [:div.balance 
-     [:a {:on-click #()} "BALANCE " [:span balance]]]
-    [:input {:type "text" :value "0.00"}]
+     [:a {:on-click #(swap! doc assoc :amount balance)} "BALANCE " [:span balance]]]
+    [:input {:field :numeric :id :amount}]
    [:div.grid.halves 
     [:div.cancel-button.column
      [:a {:on-click #(reset! selected nil)} "CANCEL"]]
     [:div.stake-button.column
      [:a {:on-click #()} "STAKE"]]
-    ]]])
+    ]] doc]])
 
 (defn yield-farming-section []
   ;; {:apy 0.6332610195499611, 
@@ -194,12 +196,13 @@
              [:div.value (frm/si-prefix (:earned-vlo mlp-data))]]]
 
 
-           (let [selected (reagent/atom nil)]
+           (let [selected (reagent/atom nil)
+                 doc (reagent/atom {:amount 0.0})]
              [:div.buttons 
 
               [(fn []
                  (case @selected
-                   :stake [stake-section selected (:balance-uve-lp-tokens mlp-data)]
+                   :stake [stake-section doc selected (:balance-uve-lp-tokens mlp-data)]
                    nil))]
 
               [(fn []

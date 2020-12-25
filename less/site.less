@@ -1,6 +1,18 @@
 @import "reset/normalize";
 @import "_silver";
 
+// reset some more
+// no highlight on inputs
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+* {
+  user-select: none;
+}
 
 .button {
   margin-top: 20px;
@@ -385,9 +397,14 @@ body {
       width: 80%;
       margin: 20px auto 0px auto;
 
+      // do not show spin stuff
+      input[type=number]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+      }
+
       .balance {
 	color: #9B9B9B;
-	text-align: left ;
+	text-align: center;
 	padding-left: 20px;
 	margin-bottom: 5px;
 	font-size: 12px;

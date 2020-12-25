@@ -335,6 +335,15 @@ template {
     display: block;
   }
 }
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+* {
+  user-select: none;
+}
 .button {
   margin-top: 20px;
   text-align: center;
@@ -765,9 +774,12 @@ body {
   width: 80%;
   margin: 20px auto 0px auto;
 }
+.yield-farming-section .stake-section .input-field input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 .yield-farming-section .stake-section .input-field .balance {
   color: #9B9B9B;
-  text-align: left ;
+  text-align: center;
   padding-left: 20px;
   margin-bottom: 5px;
   font-size: 12px;
