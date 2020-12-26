@@ -156,25 +156,10 @@
 
 (defmethod web3-method :velo-call-rebase [[_ _]]
   (go
-    (try 
-      (let [rebaser-contract (rebaser/build-signer)]
-        (<p! (rebaser/rebase rebaser-contract))
-        (dispatch [::events/web3-call-rebase-success]))
-      (catch js/Error e
-        (let [message  (oget e :?cause.?message)
-              data (oget e :?cause.?data.?message)
-              code (oget e :?cause.?code)
-              operation (oget e :?cause.?operation)]
-          (cond 
-            (and (= code "UNSUPPORTED_OPERATION")
-                 (= operation) "getAddress")
-            (dispatch [::events/flash 
-                       {:type :warning 
-                        :message "Please connect your wallet"}])
-            :else
-            (dispatch [::events/flash 
-                       {:type :error 
-                        :message (or data message "RPC Error occurred")}])))))))
+    (let [rebaser-contract (rebaser/build-signer)]
+        (u/try-flash! :warning "Problem rebasing" 
+                      (<p! (rebaser/rebase rebaser-contract)))
+        (dispatch [::events/web3-call-rebase-success]))))
 
 (defmethod web3-method :velo-token-data [[_ _]]
   (go

@@ -96,10 +96,8 @@
                      "Aren't we all eager to write history!"
                      "A bit impatient are we?"]
            on-click #(cond
-                       @msg
-                       (reset! msg (rand-nth messages))
                        (pos? @(<su [::subs/last-rebase-counter])) 
-                       (reset! msg "Easy tiger, wait until the countdown has passed..")
+                       (reset! msg (rand-nth messages))
                        :else
                        (do
                          (reset! msg "Are you the one?")
