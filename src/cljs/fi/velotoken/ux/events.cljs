@@ -88,6 +88,12 @@
             {:amount (str amount)
              :address (get-in db [:accounts 0])}]}))
 
+(re-frame/reg-event-fx 
+  ::web3-mlp-harvest
+  (fn [{:keys [db]} [_ amount]]
+    (prn amount)
+    {:web3 [:mises-legacy-pool-harvest]}))
+
 (re-frame/reg-event-db
   ::update-last-rebase-counter
   (fn [db [_]]

@@ -19,7 +19,9 @@
              "function balanceOf(address) view returns (uint256)"
              "function totalSupply() view returns (uint256)"
              "function earned(address) view returns (uint256)"
-             "function stake(uint256)" ]]
+             "function stake(uint256)" 
+             "function getReward()"
+             ]]
     (ethers/Contract. (:mises-legacy-pool addresses) 
                       (clj->js abi) 
                       (if-not signer?
@@ -44,6 +46,8 @@
 (defn stake [^ethers.Contract c amount]
   (ocall c :stake amount))
 
+(defn get-reward [^ethers.Contract c]
+  (ocall c :getReward))
 
 
 

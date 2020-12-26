@@ -114,6 +114,11 @@
       (u/try-flash! :error "Problem trying to stake"
                     (<p! (mlp-c/stake mlp-c amount)))))) 
 
+(defmethod web3-method :mises-legacy-pool-harvest [[_ _]]
+  (go 
+    (let [mlp-c (mlp-c/build-signer)]
+      (u/try-flash! :error "Problem trying harvest rewards"
+                    (<p! (mlp-c/get-reward mlp-c))))))
 
 
 (defmethod web3-method :velo-rebase-data [[_ _]]

@@ -219,7 +219,7 @@
 
                     [:div.harvest-button-section.grid.ones
                      [:div.harvest-button.column
-                      [:a {:href "#"} "HARVEST"]]
+                      [:a {:on-click #(>ev [::events/web3-mlp-harvest])} "HARVEST"]]
                      ]]))]])])]]]]))
 
 
