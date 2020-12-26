@@ -2,7 +2,8 @@
 
 (defmacro <p-float! [& p]
   `(fi.velotoken.ux.numbers/to-unsafe-float 
-     (cljs.core.async.interop/<p! (do ~@p)) 18))
+     (cljs.core.async.interop/<p! (do ~@p))
+     18))
 
 
 (defmacro <p-fixed-number! [& p]
@@ -12,7 +13,7 @@
 
 (defmacro try-flash! [ftype message & p]
   `(try  
-    (cljs.core.async.interop/<p! (do ~@p))
+    ~@p
     (catch js/Error e#
       (let [error# (oops.core/oget e# :?cause.?message)]
         (prn [:fi.velotoken.ux.events/flash 

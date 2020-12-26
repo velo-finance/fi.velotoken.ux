@@ -114,11 +114,16 @@
       (u/try-flash! :error "Problem trying to stake"
                     (<p! (mlp-c/stake mlp-c amount)))))) 
 
-(defmethod web3-method :mises-legacy-pool-harvest [[_ _]]
+(defmethod web3-method :mises-legacy-pool-harvest [[_ {:keys [address]}]]
   (go 
-    (let [mlp-c (mlp-c/build-signer)]
-      (u/try-flash! :error "Problem trying harvest rewards"
-                    (<p! (mlp-c/get-reward mlp-c))))))
+    (let [mlp-c (mlp-c/build-signer)
+          earned (u/<p-float! (mlp-c/earned mlp-c address))]
+      (if (zero? earned)
+        (dispatch [::events/flash 
+                   {:type :warning 
+                    :message  "There is nothing to harvest at this moment"}])
+        (u/try-flash! :error "Problem trying harvest rewards"
+                      (<p! (mlp-c/get-reward mlp-c)))))))
 
 
 (defmethod web3-method :mises-legacy-pool-exit [[_ {:keys [address]}]]

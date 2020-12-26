@@ -90,7 +90,7 @@
 (re-frame/reg-event-fx 
   ::web3-mlp-harvest
   (fn [{:keys [db]} [_ amount]]
-    {:web3 [:mises-legacy-pool-harvest]}))
+    {:web3 [:mises-legacy-pool-harvest {:address (get-in db [:accounts 0])}]}))
 
 (re-frame/reg-event-fx 
   ::web3-mlp-exit
