@@ -394,12 +394,16 @@ body {
   top: 0px;
   z-index: 100;
   padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 #flash span {
-  display: block;
+  max-width: 500px;
+  display: inline-block;
   padding: 4px 15px;
   border-radius: 12px;
+  margin: 0 auto;
 }
 #flash.error span {
   background-color: red;
@@ -411,6 +415,12 @@ body {
 }
 #flash.notice span {
   background-color: green;
+  color: white;
+}
+#flash span.error-message {
+  margin-top: 15px;
+  font-size: 12px;
+  background-color: #4a4a4a;
   color: white;
 }
 .connect-wallet {

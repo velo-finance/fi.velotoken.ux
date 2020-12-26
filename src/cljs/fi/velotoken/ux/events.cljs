@@ -80,6 +80,14 @@
     (assoc db :mises-legacy-pool-data data)))
 
 
+(re-frame/reg-event-fx 
+  ::web3-mlp-stake
+  (fn [{:keys [db]} [_ amount]]
+    (prn amount)
+    {:web3 [:mises-legacy-pool-stake 
+            {:amount (str amount)
+             :address (get-in db [:accounts 0])}]}))
+
 (re-frame/reg-event-db
   ::update-last-rebase-counter
   (fn [db [_]]
@@ -90,13 +98,13 @@
         (assoc db :last-rebase-counter remaining)))))
 
 ;; Error messages
-(defn flash [db ftype message]
-  (assoc db :flash {:type ftype :message message :duration 5}))
+(defn flash [db ftype message & [error]]
+  (assoc db :flash {:type ftype :message message :error error :duration 5}))
 
 (re-frame/reg-event-db
   ::flash
-  (fn [db [_ {:keys [type message]}]]
-    (flash db type message)))
+  (fn [db [_ {:keys [type message error]}]]
+    (flash db type message error)))
 
 (re-frame/reg-event-db
   ::flash-update

@@ -139,11 +139,14 @@
           "Install an ETH compatible wallet like MetaMask"]])))
 
 (defn flash-message []
-  (let [{:keys [message type]} @(<su [::subs/flash-message])]
+  (let [{:keys [message error type]} @(<su [::subs/flash-message])]
     (when message
         [:div#flash {:class (or type "error")}
          [:span 
-          message]])))
+          message]
+         (when error
+           [:span.error-message
+            error])])))
 
 (defn stake-section [doc selected balance]
   [:div.stake-section
@@ -156,7 +159,7 @@
     [:div.cancel-button.column
      [:a {:on-click #(reset! selected nil)} "CANCEL"]]
     [:div.stake-button.column
-     [:a {:on-click #()} "STAKE"]]
+     [:a {:on-click #(>ev [::events/web3-mlp-stake (:amount @doc)])} "STAKE"]]
     ]] doc]])
 
 (defn yield-farming-section []

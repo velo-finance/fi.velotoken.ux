@@ -7,11 +7,18 @@
 
     [oops.core :refer [oget ocall]]
 
+
+    [fi.velotoken.ux.utils :as u]
     [fi.velotoken.ux.events :as events]
     [fi.velotoken.ux.numbers :as numbers]
+    [fi.velotoken.ux.web3.bignumber :as bignumber]
     [fi.velotoken.ux.web3.provider :refer [provider]]
     [fi.velotoken.ux.web3.contract.velo-token :as velo-token]
     [fi.velotoken.ux.web3.contract.rebaser :as rebaser]
+    [fi.velotoken.ux.web3.contract.mises-legacy-pool :as mlp-c]
+    [fi.velotoken.ux.web3.contract.uniswap-vlo-eth :as uve-c]
+    [fi.velotoken.ux.config :refer [addresses]]
+    
     [fi.velotoken.ux.coingecko :as coingecko]
     [fi.velotoken.ux.mises-legacy-pool :as mises-legacy-pool]))
 
@@ -85,6 +92,29 @@
 
 #_ (web3-method [:mises-legacy-pool-data {:velo-price 0.0167}])
 #_ (web3-method [:mises-legacy-pool-data {:velo-price 0.0167 :address "0x.."}])
+
+
+
+(defmethod web3-method :mises-legacy-pool-stake [[_ {:keys [amount address]}]]
+  (go 
+    (let [mlp-c (mlp-c/build-signer)
+          uve-c (uve-c/build-signer)
+          ;; tranform the "floaty" amount to a bignumber (^18)
+          amount (bignumber/parse-ether amount)
+          ;; how much is the mlp allowed to spend of this address
+          ;; returned as a bignumber. returned as a bignumber (^18))
+          allowance (<p! (uve-c/allowance uve-c address (:mises-legacy-pool addresses)))]
+      ;; check if the contract is allowed to tranfer
+      ;; amount, if not, pop-up an allowance dialog first.
+      (when (ocall allowance :lt amount)
+        (u/try-flash! :warning "Approval needed to be able to stake"
+                      (<p! (uve-c/approve uve-c (:mises-legacy-pool addresses) (uve-c/max-approval)))))
+
+      ;; if not rejected, we end up at the staking dialog
+      (u/try-flash! :error "Problem trying to stake"
+                    (<p! (mlp-c/stake mlp-c amount)))))) 
+
+
 
 (defmethod web3-method :velo-rebase-data [[_ _]]
   (go

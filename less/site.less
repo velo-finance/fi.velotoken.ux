@@ -79,10 +79,15 @@ body {
   z-index: 100;
   padding: 20px 15px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   span {
-    display: block;
+    max-width: 500px;
+    display: inline-block;
     padding: 4px 15px;
     border-radius: 12px;
+    margin: 0 auto;
   }
   &.error {
     span {
@@ -103,6 +108,13 @@ body {
       background-color: green;
       color: white;
     }
+  }
+
+  span.error-message {
+    margin-top: 15px;
+    font-size: 12px;
+    background-color: #4a4a4a;
+    color: white;
   }
 }
 

@@ -16,7 +16,10 @@
 (defn -build [signer?]
   (let [provider (provider)
         abi ["function balanceOf(address) view returns (uint256)",
-             "function totalSupply() view returns (uint256)"]]
+             "function totalSupply() view returns (uint256)"
+             "function allowance(address,address) view returns (uint256)"
+             "function approve(address,uint256)"
+             ]]
     (ethers/Contract. (:uni-vlo-eth addresses) 
                       (clj->js abi) 
                       (if-not signer?
@@ -32,3 +35,18 @@
 
 (defn total-supply [^ethers/Contract c]
   (ocall c :totalSupply))
+
+(defn allowance [^ethers/Contract c owner spender]
+  (ocall c :allowance owner spender))
+
+(defn approve [^ethers/Contract c spender amount]
+  (ocall c :approve spender amount))
+
+;; const maxApproval = new BigNumber(2).pow(256).minus(1);
+(defn max-approval []
+  (-> (ethers/BigNumber.from 2)
+      (ocall :pow 256)
+      (ocall :sub 1)))
+
+#_ (max-approval)
+
