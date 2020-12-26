@@ -170,7 +170,7 @@
   ::web3-call-rebase-success
   (fn [{:keys [db]} _]
     ;; on success reload the rebase data
-    {:db (flash db :notice "We wrote history! Rebase call executed!")
+    {:db (flash db :notice "Broadcasted the transaction, will we be the one?")
      :web3 [:velo-rebase-data]}))
 
 ;; Web3 events

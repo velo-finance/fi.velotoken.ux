@@ -67,7 +67,7 @@
 
 
 (defn cond-value [v placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
-  (if [v] 
+  (if v 
     (fmtfn v)
     [:div.connect-wallet 
      [:span.placeholder placeholder]
@@ -178,11 +178,11 @@
        [:div.gauges
         [:div.gauge.mises-legacy-pool
          [:div.title "MISES LEGACY POOL APY"]
-         [:div.value (frm/perc (* 100 (:apy mlp-data)))]]
+         [:div.value [cond-value (:apy mlp-data) "--.--%" {:fmtfn #(frm/perc (* 100 %))}] ]]
 
         [:div.gauge.total-deposited
          [:div.title "TOTAL STAKED"]
-         [:div.value (frm/money (:total-staked mlp-data))]]
+         [:div.value [cond-value (:total-staked mlp-data) "$--,---.--" {:fmtfn frm/money} ]]]
 
         [:p "STAKE VLO/ETH UNI-V2, EARN VLO"]
 
@@ -194,10 +194,10 @@
            [:div.gauges.grid.halves
             [:div.gauge.velocity.column
              [:div.title "STAKED USD"]
-             [:div.value (frm/money (:staked-usd mlp-data))]]
+             [:div.value [cond-value (:staked-usd mlp-data) "$--,---.--" {:fmtfn frm/money} ]]]
             [:div.gauge.countdown.column
              [:div.title "$VLO EARNED"]
-             [:div.value (frm/si-prefix (:earned-vlo mlp-data))]]]
+             [:div.value [cond-value (:earned-vlo mlp-data) "---,---" {:fmtfn frm/si-prefix} ]]]]
 
 
            (let [selected (reagent/atom nil)
