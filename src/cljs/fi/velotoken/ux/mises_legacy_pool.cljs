@@ -180,7 +180,6 @@
     (let [total-staked (<! (total-staked-usd c))
           balance (<p-float! (mlp-c/balance-of mlp-c address))
           total-supply (<p-float! (mlp-c/total-supply mlp-c))]
-      (prn total-staked balance total-supply)
       (if (zero? total-supply)
         0.0
         (* (/ balance total-supply) total-staked)))))

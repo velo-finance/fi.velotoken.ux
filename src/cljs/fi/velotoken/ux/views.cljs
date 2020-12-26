@@ -159,7 +159,10 @@
     [:div.cancel-button.column
      [:a {:on-click #(reset! selected nil)} "CANCEL"]]
     [:div.stake-button.column
-     [:a {:on-click #(>ev [::events/web3-mlp-stake (:amount @doc)])} "STAKE"]]
+     [:a {:on-click #(if (pos? (:amount @doc)) 
+                       (>ev [::events/web3-mlp-stake (:amount @doc)])
+                       (>ev [::events/flash {:type :warning 
+                                             :message  "Can only stake positive amount"}]))} "STAKE"]]
     ]] doc]])
 
 (defn yield-farming-section []
@@ -215,7 +218,7 @@
                      [:div.stake-button.column
                       [:a {:on-click #(reset! selected :stake)} "STAKE"]]
                      [:div.unstake-button.column
-                      [:a {:href "#"} "UNSTAKE"]]]
+                      [:a {:on-click #(>ev [::events/web3-mlp-exit])} "EXIT"]]]
 
                     [:div.harvest-button-section.grid.ones
                      [:div.harvest-button.column

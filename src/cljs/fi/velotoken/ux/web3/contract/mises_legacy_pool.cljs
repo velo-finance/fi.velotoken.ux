@@ -21,6 +21,7 @@
              "function earned(address) view returns (uint256)"
              "function stake(uint256)" 
              "function getReward()"
+             "function exit()"
              ]]
     (ethers/Contract. (:mises-legacy-pool addresses) 
                       (clj->js abi) 
@@ -49,7 +50,8 @@
 (defn get-reward [^ethers.Contract c]
   (ocall c :getReward))
 
-
+(defn exit [^ethers.Contract c]
+  (ocall c :exit))
 
 
 

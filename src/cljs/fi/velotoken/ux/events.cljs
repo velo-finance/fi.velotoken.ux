@@ -83,7 +83,6 @@
 (re-frame/reg-event-fx 
   ::web3-mlp-stake
   (fn [{:keys [db]} [_ amount]]
-    (prn amount)
     {:web3 [:mises-legacy-pool-stake 
             {:amount (str amount)
              :address (get-in db [:accounts 0])}]}))
@@ -91,8 +90,12 @@
 (re-frame/reg-event-fx 
   ::web3-mlp-harvest
   (fn [{:keys [db]} [_ amount]]
-    (prn amount)
     {:web3 [:mises-legacy-pool-harvest]}))
+
+(re-frame/reg-event-fx 
+  ::web3-mlp-exit
+  (fn [{:keys [db]} [_ amount]]
+    {:web3 [:mises-legacy-pool-exit {:address (get-in db [:accounts 0])}]}))
 
 (re-frame/reg-event-db
   ::update-last-rebase-counter

@@ -121,6 +121,17 @@
                     (<p! (mlp-c/get-reward mlp-c))))))
 
 
+(defmethod web3-method :mises-legacy-pool-exit [[_ {:keys [address]}]]
+  (go 
+    (let [mlp-c (mlp-c/build-signer)
+          balance (u/<p-float! (mlp-c/balance-of mlp-c address)) ]
+      (if (zero? balance)
+        (dispatch [::events/flash 
+                   {:type :warning 
+                    :message  "Cannot exit when nothing has been staked"}])
+        (u/try-flash! :error "Problem exiting pool"
+                      (<p! (mlp-c/exit mlp-c)))))))
+
 (defmethod web3-method :velo-rebase-data [[_ _]]
   (go
     (let [velo-contract (velo-token/build)
