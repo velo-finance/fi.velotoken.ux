@@ -37,6 +37,7 @@
                                                :preloads [devtools.preload
                                                           re-frisk.preload]}}
 
+                               :compiler-options {}
                                :devtools {:http-root "resources/public"
                                           :http-port 8280
                                           }}}}
