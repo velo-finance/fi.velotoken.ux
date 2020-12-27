@@ -129,15 +129,22 @@ body {
 }
 
 #menu {
-  position: absolute;
-  top:0px;
-  right: 20px;
+  @media screen and (min-width: 600px) {
+    position: absolute;
+    top:0px;
+    right: 20px;
+  }
+
+  @media screen and (max-width: 600px) {
+  }
 
   color: white;
   
   ul {
-    display: inline-block;
+    display: block;
     list-style-type: none;
+    margin: 10px auto 0px auto;
+    padding: 0px;
 
     li {
       .button();
@@ -146,7 +153,6 @@ body {
       margin: 0;
       margin-bottom: 10px;
       a {
-	width: 120px;
       }
       &.connect {
 	a {
@@ -177,6 +183,10 @@ body {
   color: #fff;
   text-align: center;
   font-size: 64px;
+
+    @media screen and (max-width: 500px) {
+      font-size: 32px;
+    }
 }
 
 
@@ -202,6 +212,7 @@ body {
     }
   }
 
+
   display: flex;
 
   .social-sidebar {
@@ -220,13 +231,63 @@ body {
     .sidebar();
     justify-content: flex-start;
   }
+
+
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+
+
+    .responsive-sidebar {
+      flex: 1;
+      justify-content: center;
+      margin-top: 50px;
+      margin-bottom: -0px;
+      ul {
+	padding: 0px;
+	width: 60vw;
+	display: flex;
+	justify-content: space-between;
+	li { display: inline-block; }
+      }
+
+    }
+
+    .social-sidebar {
+      .responsive-sidebar();
+    }
+
+    .price-section {
+      flex: 1;
+    }
+
+    .trading-sidebar {
+      .responsive-sidebar();
+    }
+
+
+    // .social-sidebar, .trading-sidebar {
+    //   display: none;
+    // }
+  }
 }
 
 .section {
-  margin-top: 50px;
+  margin: 50px auto 0 auto;
+  padding: 0px;
+
+  width: 90vw;
+  @media screen and (min-width: 500px) {
+    width: 450px;
+  }
+
   .title {
     font-weight: 900; 
     font-size: 22.48px;
+    
+    @media screen and (max-width: 500px) {
+      font-size: 16px;
+    }
+
     color: #9B9B9B;
     letter-spacing: 1.45px;
     text-align: center;
@@ -242,11 +303,8 @@ body {
     border: 3px solid #4A4A4A;
     border-radius: 16px;
 
-    width: 450px;
-    margin: 0px auto;
 
     .gauges.price-change {
-      padding: 0 100px;
     }
 
     .seperator {
@@ -287,7 +345,12 @@ body {
 	margin-top: -5px;
 	.value {
 	  font-size: 47.2px;
+
+	  @media screen and (max-width: 500px) {
+	   font-size: 32px;
+	  }
 	}
+
       }
 
       &.velocity,&.countdown {
@@ -406,7 +469,6 @@ body {
     text-align: center;
 
     .input-field {
-      width: 80%;
       margin: 20px auto 0px auto;
 
       // do not show spin stuff
@@ -425,7 +487,7 @@ body {
       }
 
       input {
-	width: auto;
+	width: 65%;
 	background: none;
 	border: 2px solid #4a4a4a;
 	border-radius: 12px;

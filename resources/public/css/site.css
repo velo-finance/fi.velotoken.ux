@@ -330,7 +330,7 @@ template {
 .fourths > .column {
   flex: 0 0 25%;
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 700px) {
   .grid {
     display: block;
   }
@@ -432,14 +432,20 @@ body {
   color: green !important;
 }
 #menu {
-  position: absolute;
-  top: 0px;
-  right: 20px;
   color: white;
 }
+@media screen and (min-width: 600px) {
+  #menu {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+  }
+}
 #menu ul {
-  display: inline-block;
+  display: block;
   list-style-type: none;
+  margin: 10px auto 0px auto;
+  padding: 0px;
 }
 #menu ul li {
   margin-top: 20px;
@@ -460,9 +466,6 @@ body {
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-}
-#menu ul li a {
-  width: 120px;
 }
 #menu ul li.connect a {
   border: 2px solid #3F7500;
@@ -486,6 +489,11 @@ body {
   color: #fff;
   text-align: center;
   font-size: 64px;
+}
+@media screen and (max-width: 500px) {
+  .logo-title {
+    font-size: 32px;
+  }
 }
 .main-section {
   display: flex;
@@ -554,8 +562,68 @@ body {
 .main-section .trading-sidebar ul li:hover {
   opacity: 1.0;
 }
+@media screen and (max-width: 600px) {
+  .main-section {
+    flex-direction: column;
+  }
+  .main-section .responsive-sidebar {
+    flex: 1;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 0px;
+  }
+  .main-section .responsive-sidebar ul {
+    padding: 0px;
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+  }
+  .main-section .responsive-sidebar ul li {
+    display: inline-block;
+  }
+  .main-section .social-sidebar {
+    flex: 1;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 0px;
+  }
+  .main-section .social-sidebar ul {
+    padding: 0px;
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+  }
+  .main-section .social-sidebar ul li {
+    display: inline-block;
+  }
+  .main-section .price-section {
+    flex: 1;
+  }
+  .main-section .trading-sidebar {
+    flex: 1;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 0px;
+  }
+  .main-section .trading-sidebar ul {
+    padding: 0px;
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+  }
+  .main-section .trading-sidebar ul li {
+    display: inline-block;
+  }
+}
 .section {
-  margin-top: 50px;
+  margin: 50px auto 0 auto;
+  padding: 0px;
+  width: 90vw;
+}
+@media screen and (min-width: 500px) {
+  .section {
+    width: 450px;
+  }
 }
 .section .title {
   font-weight: 900;
@@ -566,16 +634,16 @@ body {
   text-shadow: -2px -2px 5px #000000, 2px 2px 5px #000000, 0px 2px 5px #000000, 2px 0px 5px #000000;
   margin: 10px auto;
 }
+@media screen and (max-width: 500px) {
+  .section .title {
+    font-size: 16px;
+  }
+}
 .section .body {
   padding: 16px;
   background: rgba(0, 0, 0, 0.6);
   border: 3px solid #4A4A4A;
   border-radius: 16px;
-  width: 450px;
-  margin: 0px auto;
-}
-.section .body .gauges.price-change {
-  padding: 0 100px;
 }
 .section .body .seperator {
   background: #4a4a4a;
@@ -612,6 +680,11 @@ body {
 }
 .section .body .gauge.vlo-token-price .value {
   font-size: 47.2px;
+}
+@media screen and (max-width: 500px) {
+  .section .body .gauge.vlo-token-price .value {
+    font-size: 32px;
+  }
 }
 .section .body .gauge.velocity .value,
 .section .body .gauge.countdown .value {
@@ -781,7 +854,6 @@ body {
   text-align: center;
 }
 .yield-farming-section .stake-section .input-field {
-  width: 80%;
   margin: 20px auto 0px auto;
 }
 .yield-farming-section .stake-section .input-field input[type=number]::-webkit-inner-spin-button {
@@ -799,7 +871,7 @@ body {
   color: white;
 }
 .yield-farming-section .stake-section .input-field input {
-  width: auto;
+  width: 65%;
   background: none;
   border: 2px solid #4a4a4a;
   border-radius: 12px;
