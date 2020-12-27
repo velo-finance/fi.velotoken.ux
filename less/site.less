@@ -390,12 +390,21 @@ body {
 
 .rebase-section {
 
-    .message {
-      color: white;
-      text-align: center;
-      padding-top: 10px;
-    }
+  .message {
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+  }
+
   .rebase-button-section {
+    display: flex;
+
+    @media screen and (max-width: 700px) {
+      display: block;
+    }
+
+
+    justify-content: space-between;
     margin-top: 40px;
     .rocket,.rebase-button {
       display: flex;
@@ -404,8 +413,8 @@ body {
 
     .rocket {
       margin-top: -25px;
+      padding: 10px 50px;
     }
-
 
     @media screen and (max-width: 700px) {
       .rocket.n1 { display: none; }
@@ -416,12 +425,6 @@ body {
       .button-hover-white();
     }
 
-
-    .rebase-button-wrapper {
-      display: flex;
-      flex-direction: column; 
-
-    }
   }
 }
 

@@ -103,13 +103,12 @@
                          (reset! msg "Are you the one?")
                          (>ev [::events/web3-call-rebase])))]
        [:div.wrapper 
-        [:div.rebase-button-section.grid.thirds
-         [:div.rocket.n0.column
+        [:div.rebase-button-section
+         [:div.rocket.n0
           [:img {:src "/images/rocket-bg-0.svg"}]]
-         [:div.rebase-button-wapper.column
-          [:div.rebase-button
-           [:a {:on-click on-click} "REBASE"]]]
-         [:div.rocket.n1.column
+         [:div.rebase-button
+           [:a {:on-click on-click} "REBASE"]]
+         [:div.rocket.n1
           [:img {:src "/images/rocket-bg-1.svg"}]]]
         [(fn []
            (when msg

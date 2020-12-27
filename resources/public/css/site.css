@@ -713,7 +713,14 @@ body {
   padding-top: 10px;
 }
 .rebase-section .rebase-button-section {
+  display: flex;
+  justify-content: space-between;
   margin-top: 40px;
+}
+@media screen and (max-width: 700px) {
+  .rebase-section .rebase-button-section {
+    display: block;
+  }
 }
 .rebase-section .rebase-button-section .rocket,
 .rebase-section .rebase-button-section .rebase-button {
@@ -722,6 +729,7 @@ body {
 }
 .rebase-section .rebase-button-section .rocket {
   margin-top: -25px;
+  padding: 10px 50px;
 }
 @media screen and (max-width: 700px) {
   .rebase-section .rebase-button-section .rocket.n1 {
@@ -747,10 +755,6 @@ body {
 }
 .rebase-section .rebase-button-section .rebase-button a:hover {
   border-color: #FFF;
-}
-.rebase-section .rebase-button-section .rebase-button-wrapper {
-  display: flex;
-  flex-direction: column;
 }
 .yield-farming-section .connect-message {
   color: #4a4a4a;
