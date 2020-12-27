@@ -381,13 +381,14 @@ body {
   background: rgba(0, 0, 0, 0.35);
 }
 #install-ethereum-compatible-wallet {
-  padding: 20px 15px;
   text-align: center;
+  background-color: orange;
 }
 #install-ethereum-compatible-wallet span {
-  background-color: orange;
+  width: 80%;
+  margin: 20px auto;
+  display: inline-block;
   padding: 4px 15px;
-  border-radius: 12px;
 }
 #flash {
   position: sticky;
@@ -427,9 +428,10 @@ body {
   display: flex;
   flex-direction: column;
 }
-.connect-wallet .message {
+.connect-wallet .subtext {
   font-size: 12px;
   color: green !important;
+  letter-spacing: 0.2em;
 }
 #menu {
   color: white;
@@ -700,7 +702,6 @@ body {
   text-align: center;
 }
 .section .body .gauge.total-deposited .value {
-  font-weight: 700;
   font-size: 22.48px;
   color: #FFFFFF;
   letter-spacing: 1.45px;
@@ -721,6 +722,11 @@ body {
 }
 .rebase-section .rebase-button-section .rocket {
   margin-top: -25px;
+}
+@media screen and (max-width: 700px) {
+  .rebase-section .rebase-button-section .rocket.n1 {
+    display: none;
+  }
 }
 .rebase-section .rebase-button-section .rebase-button {
   margin-top: 20px;

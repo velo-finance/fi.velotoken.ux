@@ -62,7 +62,7 @@
     (fmtfn v)
     [:div.connect-wallet 
      [:span.placeholder placeholder]
-     [:span.message "CONNECT WALLET"]])
+     [:span.subtext "CONNECT WALLET"]])
   )
 
 
@@ -71,7 +71,7 @@
     (fmtfn v)
     [:div.connect-wallet 
      [:span.placeholder placeholder]
-     [:span.message "CONNECT WALLET"]]))
+     [:span.subtext "CONNECT WALLET"]]))
 
 
 (defn rebase-section []
@@ -104,12 +104,12 @@
                          (>ev [::events/web3-call-rebase])))]
        [:div.wrapper 
         [:div.rebase-button-section.grid.thirds
-         [:div.rocket.0.column
+         [:div.rocket.n0.column
           [:img {:src "/images/rocket-bg-0.svg"}]]
          [:div.rebase-button-wapper.column
           [:div.rebase-button
            [:a {:on-click on-click} "REBASE"]]]
-         [:div.rocket.1.column
+         [:div.rocket.n1.column
           [:img {:src "/images/rocket-bg-1.svg"}]]]
         [(fn []
            (when msg
@@ -178,11 +178,11 @@
        [:div.gauges
         [:div.gauge.mises-legacy-pool
          [:div.title "MISES LEGACY POOL APY"]
-         [:div.value [cond-value (:apy mlp-data) "--.--%" {:fmtfn #(frm/perc (* 100 %))}] ]]
+         [:div.value [cond-value (:apy mlp-data) "00.00%" {:fmtfn #(frm/perc (* 100 %))}] ]]
 
         [:div.gauge.total-deposited
          [:div.title "TOTAL STAKED"]
-         [:div.value [cond-value (:total-staked mlp-data) "$--,---.--" {:fmtfn frm/money} ]]]
+         [:div.value [cond-value (:total-staked mlp-data) "$00,000.00" {:fmtfn frm/money} ]]]
 
         [:p "STAKE VLO/ETH UNI-V2, EARN VLO"]
 
@@ -194,10 +194,10 @@
            [:div.gauges.grid.halves
             [:div.gauge.velocity.column
              [:div.title "STAKED USD"]
-             [:div.value [cond-value (:staked-usd mlp-data) "$--,---.--" {:fmtfn frm/money} ]]]
+             [:div.value [cond-value (:staked-usd mlp-data) "$00,000.00" {:fmtfn frm/money} ]]]
             [:div.gauge.countdown.column
              [:div.title "$VLO EARNED"]
-             [:div.value [cond-value (:earned-vlo mlp-data) "---,---" {:fmtfn frm/si-prefix} ]]]]
+             [:div.value [cond-value (:earned-vlo mlp-data) "000,000" {:fmtfn frm/si-prefix} ]]]]
 
 
            (let [selected (reagent/atom nil)
