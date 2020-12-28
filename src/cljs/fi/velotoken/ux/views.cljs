@@ -14,15 +14,6 @@
 (def <su re-frame/subscribe)
 (def >ev re-frame/dispatch)
 
-;; (comment oind []
-;;   [:div
-;;        [:h1 "VELO Token " @name]
-;;        [:p "Connect to metamask " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-connect])} "Click here"]]
-;;        [:p "Add token " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-add-token])} "Click here"]]
-;;        [:p "Velo Token data " [:a {:href "#" :on-click #(re-frame/dispatch [::events/web3-velo-token-data])} "Click here"]]
-;;        ])
-
-
 (defn price-section []
   [:div.price-section
    [:div.section

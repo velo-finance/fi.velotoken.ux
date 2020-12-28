@@ -166,21 +166,6 @@
                       (<p! (rebaser/rebase rebaser-contract)))
         (dispatch [::events/web3-call-rebase-success]))))
 
-(defmethod web3-method :velo-token-data [[_ _]]
-  (go
-    (let [velo-contract (velo-token/build)
-          rebaser-contract (rebaser/build)
-          to-float #(numbers/to-unsafe-float % 18)]
-
-      (prn {:balance (to-float  (<p! (velo-token/balance-of velo-contract "0x...")))
-            :total-supply (to-float  (<p! (velo-token/total-supply velo-contract)))
-            :velocity (to-float  (<p! (rebaser/velocity rebaser-contract)))
-            :velocity-relative (to-float  (<p! (rebaser/relative-velocity rebaser-contract)))
-            :last-rebase (numbers/to-number (<p! (rebaser/last-rebase rebaser-contract)))
-            }))))
-
-#_ (web3-method [:velo-token-data])
-
 (reg-fx :web3 web3-method)
 
 (reg-fx :web3-multiple 
