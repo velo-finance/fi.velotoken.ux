@@ -46,6 +46,8 @@ body {
  font-family: 'Source Code Pro', monospace;
 }
 
+
+
 .app-bg {
   background: #000 50% no-repeat url(/images/bg-desktop-optimized.jpg);
   position: fixed;
@@ -177,6 +179,22 @@ body {
   img {
     display: block;
     margin: 0px auto;
+  }
+}
+
+.white-paper {
+  text-align: center;
+  justify-content: space-between;
+  max-width: 400px;
+  margin: 0 auto;
+  a { 
+    display: block;
+    color: white; 
+    opacity: 0.6;
+
+    @media screen and (max-width: 700px) {
+      margin: 25px 0 0px;
+    }
   }
 }
 

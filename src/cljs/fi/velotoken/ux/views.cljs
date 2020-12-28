@@ -228,6 +228,14 @@
 
       [:div.logo-title
        [:span "VELOTOKEN"]]
+
+      [:div.white-paper.grid
+       [:a.column {:href "https://supermises.medium.com/velo-a-defi-experiment-in-austrian-economics-fair-farming-and-elasticity-4e0cc51058aa"
+            :target "_velointro"} 
+        "Introduction"]
+
+       [:a.column {:href "https://github.com/velo-finance/velo-protocol/blob/master/VELO_Whitepaper_v1.1.pdf" :target "_velowp"}
+        "WhitePaper"]]
       
       [:div.main-section
 

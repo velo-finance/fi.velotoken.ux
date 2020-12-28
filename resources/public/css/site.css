@@ -486,6 +486,22 @@ body {
   display: block;
   margin: 0px auto;
 }
+.white-paper {
+  text-align: center;
+  justify-content: space-between;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.white-paper a {
+  display: block;
+  color: white;
+  opacity: 0.6;
+}
+@media screen and (max-width: 700px) {
+  .white-paper a {
+    margin: 25px 0 0px;
+  }
+}
 .logo-title {
   font-family: 'Audiowide', cursive;
   color: #fff;
