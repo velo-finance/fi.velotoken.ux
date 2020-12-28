@@ -11,6 +11,13 @@
  (fn [db]
    (:name db)))
 
+
+
+(re-frame/reg-sub
+ ::logo-rotation
+ (fn [db]
+   (or (:logo-rotation db))))
+
 (re-frame/reg-sub
  ::ethereum-injected?
  (fn [db]

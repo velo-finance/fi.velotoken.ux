@@ -19,7 +19,7 @@
             ;; initialization
             #_ (assoc :accounts (:accounts store)) 
             )
-    :coingecko [:update]
+    :dispatch [::coingecko-sync]
     :web3 [:initialize]
     :dispatch-interval-multiple
     [{:dispatch [::update-last-rebase-counter]
@@ -35,7 +35,7 @@
      ;; reload coingecko-data each x seconds
      {:dispatch [::coingecko-sync]
       :id ::coingecko-update
-      :ms 10000 }
+      :ms 30000 }
      ;; NOTE: disabled, as we are firing the legacy
      ;; pool data update event after coingecko update
      #_ {:dispatch [::web3-mises-legacy-pool-data]
@@ -122,13 +122,19 @@
       (update-in db [:flash :duration] dec)
       (dissoc db :flash))))
 
+;; logo rotation
+(re-frame/reg-event-db 
+  ::logo-rotation 
+  (fn [db]
+    (assoc db :logo-rotation (* 360 (int (rand 10))))))
 
 ;; Coingecko update
 
 (re-frame/reg-event-fx
   ::coingecko-sync
   (fn [_ [_ info]]
-    {:coingecko [:update]}))
+    {:coingecko [:update]
+     :dispatch [::logo-rotation]}))
 
 ;; After price we want the legacy pool to
 ;; update

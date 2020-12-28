@@ -224,7 +224,9 @@
 
       [menu-section]
       [:div.logo 
-       [:img {:src "/images/logo+border.svg"}]]
+       [:img {:style 
+              {:transform (str "rotate(" @(<su [::subs/logo-rotation]) "deg)")} 
+              :src "/images/logo+border.svg"}]]
 
       [:div.logo-title
        [:span "VELOTOKEN"]]
