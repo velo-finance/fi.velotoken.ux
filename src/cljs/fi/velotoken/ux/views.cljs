@@ -235,7 +235,11 @@
         "Introduction"]
 
        [:a.column {:href "https://github.com/velo-finance/velo-protocol/blob/master/VELO_Whitepaper_v1.1.pdf" :target "_velowp"}
-        "WhitePaper"]]
+        "WhitePaper"]
+
+       [:a.column {:href "https://solidity.finance/audits/VELO/" :target "_veloaudit"}
+        "SolFin Audit"]
+       ]
       
       [:div.main-section
 
@@ -243,11 +247,12 @@
         (letfn [(item [t u]
                   [:a {:href u :target t} [:img {:src (str "/images/socials/" t)}]])]
           [:ul
+           [:li (item "twitter.svg" "https://twitter.com/Velotoken")]
            [:li (item "telegram.svg" "https://t.me/Velotoken")]
            [:li (item "medium.svg" "https://medium.com/@SuperMises")]
            [:li (item "discord.svg" "https://discord.gg/rGnnKTR")]
            [:li (item "github.svg" "https://github.com/velo-finance/velo-protocol")]
-           [:li (item "reddit.svg" "https://www.reddit.com/r/ethtrader/comments/kgivpu/velotoken_vlo_audit_shows_high_level_security_and/")]
+           #_[:li (item "reddit.svg" "https://www.reddit.com/r/ethtrader/comments/kgivpu/velotoken_vlo_audit_shows_high_level_security_and/")]
            ])] 
 
        [price-section]
