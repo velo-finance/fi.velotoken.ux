@@ -1,7 +1,7 @@
 # fi.velotoken.ux
 
-A [re-frame](https://github.com/day8/re-frame) application designed to ... well, that part is up to
-you.
+A [re-frame](https://github.com/day8/re-frame) application designed to provide a UX
+to the VELO Token DAO. This is a community project.
 
 ## Getting Started
 
