@@ -1,17 +1,17 @@
 (ns fi.velotoken.ux.subs
   (:require
-   [re-frame.core :as re-frame]
-   ["moment" :as moment]
-   ["moment-duration-format" :as moment-duration-format]
-   [clojure.string :as str]
-   ))
+    [re-frame.core :as re-frame]
+    ;; need to require moment-duration-format to enable
+    ;; the format addons needed on moment.
+    ["moment" :as moment]
+    ["moment-duration-format" :as moment-duration-format]
+    [clojure.string :as str]
+    ))
 
 (re-frame/reg-sub
  ::name
  (fn [db]
    (:name db)))
-
-
 
 (re-frame/reg-sub
  ::logo-rotation

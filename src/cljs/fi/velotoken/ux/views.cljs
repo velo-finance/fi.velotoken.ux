@@ -6,10 +6,7 @@
 
    [fi.velotoken.ux.subs :as subs]
    [fi.velotoken.ux.events :as events]
-   [fi.velotoken.ux.format :as frm]
-   [cljs.core.async :refer [go]]
-   [cljs.core.async.interop :refer-macros [<p!]]
-   ))
+   [fi.velotoken.ux.format :as frm]))
 
 (def <su re-frame/subscribe)
 (def >ev re-frame/dispatch)
@@ -98,7 +95,7 @@
          [:div.rocket.n0
           [:img {:src "/images/rocket-bg-0.svg"}]]
          [:div.rebase-button
-           [:a {:on-click on-click} "REBASE"]]
+          [:a {:on-click on-click} "REBASE"]]
          [:div.rocket.n1
           [:img {:src "/images/rocket-bg-1.svg"}]]]
         [(fn []
@@ -110,56 +107,50 @@
   (let [eth-inj? @(<su [::subs/ethereum-injected?])
         address @(<su [::subs/web3-account-connected])]
     (when eth-inj?
-        [:div#menu
-         [:ul 
-          [:li.connect 
-           [:a {:href "#" :on-click #(>ev [::events/web3-connect])}
-                        (or address  "CONNECT")]]
-          [:li.add-token 
-           [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]])))
+      [:div#menu
+       [:ul 
+        [:li.connect 
+         [:a {:href "#" :on-click #(>ev [::events/web3-connect])}
+          (or address  "CONNECT")]]
+        [:li.add-token 
+         [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]])))
 
 
 (defn install-ethereum-compatible-wallet []
   (let [eth-inj? @(<su [::subs/ethereum-injected?])]
     (when-not eth-inj?
-        [:div#install-ethereum-compatible-wallet
-         [:span 
-          "Install an ETH compatible wallet like MetaMask"]])))
+      [:div#install-ethereum-compatible-wallet
+       [:span 
+        "Install an ETH compatible wallet like MetaMask"]])))
 
 (defn flash-message []
   (let [{:keys [message error type]} @(<su [::subs/flash-message])]
     (when message
-        [:div#flash {:class (or type "error")}
-         [:span 
-          message]
-         (when error
-           [:span.error-message
-            error])])))
+      [:div#flash {:class (or type "error")}
+       [:span 
+        message]
+       (when error
+         [:span.error-message
+          error])])))
 
 (defn stake-section [doc selected balance]
   [:div.stake-section
    [:div.seperator]
    [bind-fields  [:div.input-field
-    [:div.balance 
-     [:a {:on-click #(swap! doc assoc :amount balance)} "BALANCE " [:span balance]]]
-    [:input {:field :numeric :id :amount}]
-   [:div.grid.halves 
-    [:div.cancel-button.column
-     [:a {:on-click #(reset! selected nil)} "CANCEL"]]
-    [:div.stake-button.column
-     [:a {:on-click #(if (pos? (:amount @doc)) 
-                       (>ev [::events/web3-mlp-stake (:amount @doc)])
-                       (>ev [::events/flash {:type :warning 
-                                             :message  "Can only stake positive amount"}]))} "STAKE"]]
-    ]] doc]])
+                  [:div.balance 
+                   [:a {:on-click #(swap! doc assoc :amount balance)} "BALANCE " [:span balance]]]
+                  [:input {:field :numeric :id :amount}]
+                  [:div.grid.halves 
+                   [:div.cancel-button.column
+                    [:a {:on-click #(reset! selected nil)} "CANCEL"]]
+                   [:div.stake-button.column
+                    [:a {:on-click #(if (pos? (:amount @doc)) 
+                                      (>ev [::events/web3-mlp-stake (:amount @doc)])
+                                      (>ev [::events/flash {:type :warning 
+                                                            :message  "Can only stake positive amount"}]))} "STAKE"]]
+                   ]] doc]])
 
 (defn yield-farming-section []
-  ;; {:apy 0.6332610195499611, 
-  ;;  :apr 0.49090847085091577, 
-  ;;  :staked-usd 5718.047050293853, 
-  ;;  :total-staked 55570.135820930554, 
-  ;;  :earned-vlo 24127.77788713968
-  ;;  }
   (let [mlp-data @(<su [::subs/mises-legacy-pool-data])]
     [:div.yield-farming-section
      [:div.section
@@ -216,64 +207,61 @@
 
 (defn main-panel []
   [:div.app-container
-     [:div.app-bg]
-     [:div.app-content
-      ;; informational messages
-      [install-ethereum-compatible-wallet]
-      [flash-message]
+   [:div.app-bg]
+   [:div.app-content
+    ;; informational messages
+    [install-ethereum-compatible-wallet]
+    [flash-message]
 
-      [menu-section]
-      [:div.logo 
-       [:img {:style 
-              {:transform (str "rotate(" @(<su [::subs/logo-rotation]) "deg)")} 
-              :src "/images/logo+border.svg"}]]
+    [menu-section]
+    [:div.logo 
+     [:img {:style 
+            {:transform (str "rotate(" @(<su [::subs/logo-rotation]) "deg)")} 
+            :src "/images/logo+border.svg"}]]
 
-      [:div.logo-title
-       [:span "VELOTOKEN"]]
+    [:div.logo-title
+     [:span "VELOTOKEN"]]
 
-      [:div.white-paper.grid
-       [:a.column {:href "https://supermises.medium.com/velo-a-defi-experiment-in-austrian-economics-fair-farming-and-elasticity-4e0cc51058aa"
-            :target "_velointro"} 
-        "Introduction"]
+    [:div.white-paper.grid
+     [:a.column {:href "https://supermises.medium.com/velo-a-defi-experiment-in-austrian-economics-fair-farming-and-elasticity-4e0cc51058aa"
+                 :target "_velointro"} 
+      "Introduction"]
 
-       [:a.column {:href "https://github.com/velo-finance/velo-protocol/blob/master/VELO_Whitepaper_v1.1.pdf" :target "_velowp"}
-        "WhitePaper"]
+     [:a.column {:href "https://github.com/velo-finance/velo-protocol/blob/master/VELO_Whitepaper_v1.1.pdf" :target "_velowp"}
+      "WhitePaper"]
 
-       [:a.column {:href "https://solidity.finance/audits/VELO/" :target "_veloaudit"}
-        "SolFin Audit"]
-       ]
-      
-      [:div.main-section
-
-       [:div.social-sidebar
-        (letfn [(item [t u]
-                  [:a {:href u :target t} [:img {:src (str "/images/socials/" t)}]])]
-          [:ul
-           [:li (item "twitter.svg" "https://twitter.com/Velotoken")]
-           [:li (item "telegram.svg" "https://t.me/Velotoken")]
-           [:li (item "medium.svg" "https://medium.com/@SuperMises")]
-           [:li (item "discord.svg" "https://discord.gg/rGnnKTR")]
-           [:li (item "github.svg" "https://github.com/velo-finance/velo-protocol")]
-           #_[:li (item "reddit.svg" "https://www.reddit.com/r/ethtrader/comments/kgivpu/velotoken_vlo_audit_shows_high_level_security_and/")]
-           ])] 
-
-       [price-section]
-
-       [:div.trading-sidebar
-        (letfn [(item [t u]
-                  [:a {:href u :target t} [:img {:src (str "/images/trading/" t)}]])]
-          [:ul
-           [:li (item "uniswap.svg" "https://info.uniswap.org/pair/0x259E558892783fd8941EBBeDa694318C1C3d9263")]
-           [:li (item "dextools.svg" "https://www.dextools.io/app/uniswap/pair-explorer/0x259e558892783fd8941ebbeda694318c1c3d9263")]
-           [:li (item "coingecko.svg" "https://www.coingecko.com/en/coins/velo-token")]
-           [:li (item "coinmarketcap.svg" "https://coinmarketcap.com/currencies/velo-token/")]
-           ])]]
-      
-      [rebase-section]
-      
-      [yield-farming-section]
-
-      [:div#footer]
+     [:a.column {:href "https://solidity.finance/audits/VELO/" :target "_veloaudit"}
+      "SolFin Audit"]
      ]
 
-   ])
+    [:div.main-section
+
+     [:div.social-sidebar
+      (letfn [(item [t u]
+                [:a {:href u :target t} [:img {:src (str "/images/socials/" t)}]])]
+        [:ul
+         [:li (item "twitter.svg" "https://twitter.com/Velotoken")]
+         [:li (item "telegram.svg" "https://t.me/Velotoken")]
+         [:li (item "medium.svg" "https://medium.com/@SuperMises")]
+         [:li (item "discord.svg" "https://discord.gg/rGnnKTR")]
+         [:li (item "github.svg" "https://github.com/velo-finance/velo-protocol")]
+         #_[:li (item "reddit.svg" "https://www.reddit.com/r/ethtrader/comments/kgivpu/velotoken_vlo_audit_shows_high_level_security_and/")]
+         ])] 
+
+     [price-section]
+
+     [:div.trading-sidebar
+      (letfn [(item [t u]
+                [:a {:href u :target t} [:img {:src (str "/images/trading/" t)}]])]
+        [:ul
+         [:li (item "uniswap.svg" "https://info.uniswap.org/pair/0x259E558892783fd8941EBBeDa694318C1C3d9263")]
+         [:li (item "dextools.svg" "https://www.dextools.io/app/uniswap/pair-explorer/0x259e558892783fd8941ebbeda694318c1c3d9263")]
+         [:li (item "coingecko.svg" "https://www.coingecko.com/en/coins/velo-token")]
+         [:li (item "coinmarketcap.svg" "https://coinmarketcap.com/currencies/velo-token/")]
+         ])]]
+
+    [rebase-section]
+
+    [yield-farming-section]
+
+    [:div#footer]]])

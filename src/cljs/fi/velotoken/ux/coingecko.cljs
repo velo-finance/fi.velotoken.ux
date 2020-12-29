@@ -2,11 +2,7 @@
   (:require [cljs.core.async :refer [go <!]]
             [cljs-http.client :as http]
             [camel-snake-kebab.core :as csk]
-            [camel-snake-kebab.extras :as cske]
-            [fi.velotoken.ux.config :refer [addresses]]
-            ))
-
-#_ (def eth-token-price-url "https://api.coingecko.com/api/v3/simple/token_price/ethereum")
+            [camel-snake-kebab.extras :as cske]))
 
 (def eth-token-price-url "https://api.coingecko.com/api/v3/coins/velo-token")
 

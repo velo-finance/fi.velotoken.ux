@@ -1,8 +1,6 @@
 (ns fi.velotoken.ux.mises-legacy-pool
   (:require 
-    [cljs.core.async :refer [go]]
-    [cljs.core.async.interop :refer-macros [<p!]]
-
+    [cljs.core.async :refer [go <!]]
     [oops.core :refer [ocall]]
 
     [fi.velotoken.ux.web3.contract.velo-token :as vlo-c]
@@ -11,7 +9,6 @@
 
     [fi.velotoken.ux.config :refer [addresses]]
 
-    [fi.velotoken.ux.numbers :refer [to-unsafe-float]]
     [fi.velotoken.ux.utils :refer-macros [<p-float! <p-fixed-number!]]))
 
 ;; Abstraction over the Mises Legacy Pool, brings together:
@@ -143,7 +140,7 @@
 
 #_ (go (prn (<! (total-staked-usd (build 0.0067)))))
 
-(defn x-perc-rate [{:keys [vlo-price-usd uve-c mlp-c] :as c} period-in-seconds]
+(defn x-perc-rate [{:keys [vlo-price-usd mlp-c] :as c} period-in-seconds]
   (go 
     (let [total-staked (<! (total-staked-usd c))
           ;; calculate reward rate when staking 100K extra
@@ -187,7 +184,7 @@
 ;; 11479390
 #_ (go (prn (<! (staked-usd (build 0.0167) "0x..."))))
 
-(defn earned-vlo [{:keys [mlp-c vlo-c] :as c} address]
+(defn earned-vlo [{:keys [mlp-c vlo-c]} address]
   (go 
     (let [earned (<p-float! (mlp-c/earned mlp-c address))
           scaling-factor (<p-float! (vlo-c/scaling-factor vlo-c))]

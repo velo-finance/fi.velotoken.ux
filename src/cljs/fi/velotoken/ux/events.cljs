@@ -13,12 +13,8 @@
 (re-frame/reg-event-fx
  ::initialize-db
  [(inject-cofx :store)]
- (fn [{:keys [store]} _]
-   {:db (-> db/default-db
-            ;; NOTE: disabled as we get them from
-            ;; initialization
-            #_ (assoc :accounts (:accounts store)) 
-            )
+ (fn [_ _]
+   {:db db/default-db
     :dispatch [::coingecko-sync]
     :web3 [:initialize]
     :dispatch-interval-multiple
@@ -89,12 +85,12 @@
 
 (re-frame/reg-event-fx 
   ::web3-mlp-harvest
-  (fn [{:keys [db]} [_ amount]]
+  (fn [{:keys [db]} [_ _]]
     {:web3 [:mises-legacy-pool-harvest {:address (get-in db [:accounts 0])}]}))
 
 (re-frame/reg-event-fx 
   ::web3-mlp-exit
-  (fn [{:keys [db]} [_ amount]]
+  (fn [{:keys [db]} [_ _]]
     {:web3 [:mises-legacy-pool-exit {:address (get-in db [:accounts 0])}]}))
 
 (re-frame/reg-event-db
@@ -132,7 +128,7 @@
 
 (re-frame/reg-event-fx
   ::coingecko-sync
-  (fn [_ [_ info]]
+  (fn [_ [_ _]]
     {:coingecko [:update]
      :dispatch [::logo-rotation]}))
 

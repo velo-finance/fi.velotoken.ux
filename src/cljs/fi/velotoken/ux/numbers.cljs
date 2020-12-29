@@ -1,6 +1,5 @@
 (ns fi.velotoken.ux.numbers
-  (:require [fi.velotoken.ux.web3.bignumber :as bignumber]
-            [fi.velotoken.ux.web3.fixed-number :as fixed-number]))
+  (:require [fi.velotoken.ux.web3.fixed-number :as fixed-number]))
 
 (defn to-number [bn]
   (.toNumber bn))

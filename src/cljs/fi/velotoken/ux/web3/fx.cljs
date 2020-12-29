@@ -1,25 +1,20 @@
 (ns fi.velotoken.ux.web3.fx
   (:require
-    [re-frame.core :refer [reg-fx dispatch console reg-event-db reg-event-fx]]
-    ["ethers" :as ethers]
-    [cljs.core.async :refer [go]]
+    [re-frame.core :refer [reg-fx dispatch]]
+    [cljs.core.async :refer [go <!]]
     [cljs.core.async.interop :refer-macros [<p!]]
 
     [oops.core :refer [oget ocall]]
-
 
     [fi.velotoken.ux.utils :as u]
     [fi.velotoken.ux.events :as events]
     [fi.velotoken.ux.numbers :as numbers]
     [fi.velotoken.ux.web3.bignumber :as bignumber]
     [fi.velotoken.ux.web3.provider :refer [provider]]
-    [fi.velotoken.ux.web3.contract.velo-token :as velo-token]
     [fi.velotoken.ux.web3.contract.rebaser :as rebaser]
     [fi.velotoken.ux.web3.contract.mises-legacy-pool :as mlp-c]
     [fi.velotoken.ux.web3.contract.uniswap-vlo-eth :as uve-c]
     [fi.velotoken.ux.config :refer [addresses]]
-    
-    [fi.velotoken.ux.coingecko :as coingecko]
     [fi.velotoken.ux.mises-legacy-pool :as mises-legacy-pool]))
 
 ;; Web3 FX
@@ -63,7 +58,7 @@
                 signer (ocall provider :getSigner)
                 address (<p! (ocall signer :getAddress))]
             (dispatch [::events/web3-initialized {:accounts [address]}]))
-          (catch js/Error e
+          (catch js/Error _
             (dispatch [::events/web3-initialized {:accounts []}])))))))
 
 (defmethod web3-method :add-token [[_ token-info]]
@@ -139,8 +134,7 @@
 
 (defmethod web3-method :velo-rebase-data [[_ _]]
   (go
-    (let [velo-contract (velo-token/build)
-          rebaser-contract (rebaser/build)
+    (let [rebaser-contract (rebaser/build)
           to-float #(numbers/to-unsafe-float % 18)]
 
       (dispatch [::events/web3-velo-rebase-data-recv 

@@ -2,8 +2,7 @@
   (:require
     ["ethers" :as ethers]
 
-    [oops.core :refer [oget oset! ocall oapply ocall! oapply!
-                       oget+ oset!+ ocall+ oapply+ ocall!+ oapply!+]]
+    [oops.core :refer [ocall]]
 
     [fi.velotoken.ux.web3.provider :refer [provider]]
     [fi.velotoken.ux.config :refer [addresses]]))
