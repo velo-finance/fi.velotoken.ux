@@ -234,6 +234,11 @@
       "SolFin Audit"]
      ]
 
+    [:div.white-paper.grid
+     [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
+      "Governance"]
+     ]
+
     [:div.main-section
 
      [:div.social-sidebar
