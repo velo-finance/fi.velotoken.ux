@@ -234,7 +234,9 @@
     [:div.white-paper.grid
      [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
       "Governance"]
-     ]
+
+    [:a.column {:href "#" :on-click ""} "Roadmap"]
+    ]
 
     [:div.main-section
 
