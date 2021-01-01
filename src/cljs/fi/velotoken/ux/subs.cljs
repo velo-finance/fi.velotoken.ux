@@ -19,6 +19,11 @@
    (or (:logo-rotation db))))
 
 (re-frame/reg-sub
+ ::show-modal?
+ (fn [db]
+   (or (:show-modal db))))
+
+(re-frame/reg-sub
  ::ethereum-injected?
  (fn [db]
    (:ethereum-injected? db)))

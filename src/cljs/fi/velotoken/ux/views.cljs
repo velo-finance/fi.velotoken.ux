@@ -235,7 +235,7 @@
      [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
       "Governance"]
 
-    [:a.column {:href "#" :on-click ""} "Roadmap"]
+    [:a.column {:href "#" :on-click #(>ev [::events/show-modal true])} "Roadmap"]
     ]
 
     [:div.main-section
