@@ -17,7 +17,8 @@
 
   :plugins [[lein-shadow "0.3.1"]
             [lein-shell "0.5.0"]
-            [lein-less "1.7.5"]]
+            [lein-less "1.7.5"]
+            [lein-cljfmt "0.7.0"]]
 
   :less {:source-paths ["less"]
          :target-path  "resources/public/css"}
