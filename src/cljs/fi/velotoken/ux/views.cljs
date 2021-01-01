@@ -270,9 +270,16 @@
 
     [:div#footer]])
 
+(defn app-modal []
+  [:div.app-modal {:on-click #(>ev [::events/show-modal false])}
+   [:img {:src "/images/info/roadmap.jpg"}]
+   ])
+
 (defn main-panel []
   [:div.app-container
    [:div.app-bg]
    [app-content]
-   ]
+   (if @(<su [::subs/show-modal?])
+    [app-modal])
+  ]
 )
