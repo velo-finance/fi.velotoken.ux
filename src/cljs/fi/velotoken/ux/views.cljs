@@ -204,10 +204,7 @@
                       [:a {:on-click #(>ev [::events/web3-mlp-harvest])} "HARVEST"]]
                      ]]))]])])]]]]))
 
-
-(defn main-panel []
-  [:div.app-container
-   [:div.app-bg]
+(defn app-content []
    [:div.app-content
     ;; informational messages
     [install-ethereum-compatible-wallet]
@@ -269,4 +266,11 @@
 
     [yield-farming-section]
 
-    [:div#footer]]])
+    [:div#footer]])
+
+(defn main-panel []
+  [:div.app-container
+   [:div.app-bg]
+   [app-content]
+   ]
+)
