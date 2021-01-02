@@ -182,6 +182,20 @@ Use `debug?` for logging or other tasks that should run only on `dev` builds:
   (println "This message will appear in the browser console only on dev builds."))
 ```
 
+### Linting
+
+Linting can be done with [cljfmt](https://github.com/weavejester/cljfmt):
+
+```sh
+lein cljfmt check
+```
+
+Fix linting errors:
+
+```sh
+lein cljfmt fix
+```
+
 ## Production
 
 Build the app with the `prod` profile:

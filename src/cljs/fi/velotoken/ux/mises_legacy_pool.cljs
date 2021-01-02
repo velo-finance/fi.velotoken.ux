@@ -1,15 +1,15 @@
 (ns fi.velotoken.ux.mises-legacy-pool
-  (:require 
-    [cljs.core.async :refer [go <!]]
-    [oops.core :refer [ocall]]
+  (:require
+   [cljs.core.async :refer [go <!]]
+   [oops.core :refer [ocall]]
 
-    [fi.velotoken.ux.web3.contract.velo-token :as vlo-c]
-    [fi.velotoken.ux.web3.contract.uniswap-vlo-eth :as uve-c]
-    [fi.velotoken.ux.web3.contract.mises-legacy-pool :as mlp-c]
+   [fi.velotoken.ux.web3.contract.velo-token :as vlo-c]
+   [fi.velotoken.ux.web3.contract.uniswap-vlo-eth :as uve-c]
+   [fi.velotoken.ux.web3.contract.mises-legacy-pool :as mlp-c]
 
-    [fi.velotoken.ux.config :refer [addresses]]
+   [fi.velotoken.ux.config :refer [addresses]]
 
-    [fi.velotoken.ux.utils :refer-macros [<p-float! <p-fixed-number!]]))
+   [fi.velotoken.ux.utils :refer-macros [<p-float! <p-fixed-number!]]))
 
 ;; Abstraction over the Mises Legacy Pool, brings together:
 ;;   a. MisesLegacyPool
@@ -117,31 +117,31 @@
    :uve-c (uve-c/build)
    :mlp-c (mlp-c/build)})
 
-(defn total-liquidity-usd 
-  "Total amount of liquidity in the UNI-V2 VLO ETH Pool" 
+(defn total-liquidity-usd
+  "Total amount of liquidity in the UNI-V2 VLO ETH Pool"
   [{:keys [vlo-price-usd vlo-c]}]
-  (go 
+  (go
     (let [vlo-balance (<p-float! (vlo-c/balance-of vlo-c (:uni-vlo-eth addresses)))]
       (* 2 vlo-balance vlo-price-usd))))
 
 ;; double checked an working
-#_ (go (prn (<! (total-liquidity-usd (build 0.0067)))))
+#_(go (prn (<! (total-liquidity-usd (build 0.0067)))))
 
 (defn total-staked-usd
   "Total amount staked in the Mises Legacy Pool"
   [{:keys [uve-c] :as c}]
-  (go 
+  (go
     (let [total-supply (<p-float! (uve-c/total-supply uve-c))
           balance (<p-float! (uve-c/balance-of uve-c (:mises-legacy-pool addresses)))]
       (if (zero? total-supply)
         0.0
-        (* (/ balance total-supply) 
+        (* (/ balance total-supply)
            (<! (total-liquidity-usd c)))))))
 
-#_ (go (prn (<! (total-staked-usd (build 0.0067)))))
+#_(go (prn (<! (total-staked-usd (build 0.0067)))))
 
 (defn x-perc-rate [{:keys [vlo-price-usd mlp-c] :as c} period-in-seconds]
-  (go 
+  (go
     (let [total-staked (<! (total-staked-usd c))
           ;; calculate reward rate when staking 100K extra
           ;; in the pool
@@ -151,27 +151,27 @@
       (/ (* reward-rate-vlo vlo-price-usd period-in-seconds)
          100000))))
 
-#_ (go (prn (<! (x-perc-rate (build 0.0067) (* 365 24 60 60)))))
+#_(go (prn (<! (x-perc-rate (build 0.0067) (* 365 24 60 60)))))
 
 (defn daily-perc-rate [c]
   (x-perc-rate c (* 24 60 60)))
 
-#_ (go (prn (<! (daily-perc-rate (build 0.0067)))))
+#_(go (prn (<! (daily-perc-rate (build 0.0067)))))
 
 (defn annual-perc-rate [c]
   (x-perc-rate c (* 365 24 60 60)))
 
-#_ (go (prn (<! (annual-perc-rate (build 0.0067)))))
+#_(go (prn (<! (annual-perc-rate (build 0.0067)))))
 
 (defn annual-perc-yield [c]
   (go
     (let [dpr (<! (daily-perc-rate c))]
-       (- (Math/pow (+ 1.0 dpr) 365) 1))))
+      (- (Math/pow (+ 1.0 dpr) 365) 1))))
 
-#_ (go (prn (<! (annual-perc-yield (build 0.0167)))))
+#_(go (prn (<! (annual-perc-yield (build 0.0167)))))
 
-(defn staked-usd 
-  "the amount of usd this address has staked in the pool" 
+(defn staked-usd
+  "the amount of usd this address has staked in the pool"
   [{:keys [mlp-c] :as c} address]
   (go
     (let [total-staked (<! (total-staked-usd c))
@@ -182,23 +182,25 @@
         (* (/ balance total-supply) total-staked)))))
 
 ;; 11479390
-#_ (go (prn (<! (staked-usd (build 0.0167) "0x..."))))
+#_(go (prn (<! (staked-usd (build 0.0167) "0x..."))))
 
 (defn earned-vlo [{:keys [mlp-c vlo-c]} address]
-  (go 
+  (go
     (let [earned (<p-float! (mlp-c/earned mlp-c address))
           scaling-factor (<p-float! (vlo-c/scaling-factor vlo-c))]
       (* earned scaling-factor))))
 
-#_ (go (prn (<! (earned-vlo (build 0.0167) "0x..."))))
+#_(go (prn (<! (earned-vlo (build 0.0167) "0x..."))))
 
 
 ;; NOTE: the to string conversion of the fixed-number
+
+
 (defn balance-uve-lp-tokens [{:keys [uve-c]} address]
   (go (ocall (<p-fixed-number! (uve-c/balance-of uve-c  address))
              :toString)))
 
-#_ (go (prn (<! (balance-uve-lp-tokens (build 0.0167) "0x..."))))
+#_(go (prn (<! (balance-uve-lp-tokens (build 0.0167) "0x..."))))
 
 
 
