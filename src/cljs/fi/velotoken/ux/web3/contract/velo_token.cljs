@@ -1,11 +1,11 @@
 (ns fi.velotoken.ux.web3.contract.velo-token
   (:require
-    ["ethers" :as ethers]
+   ["ethers" :as ethers]
 
-    [oops.core :refer [ocall]]
+   [oops.core :refer [ocall]]
 
-    [fi.velotoken.ux.web3.provider :refer [provider]]
-    [fi.velotoken.ux.config :refer [addresses]]))
+   [fi.velotoken.ux.web3.provider :refer [provider]]
+   [fi.velotoken.ux.config :refer [addresses]]))
 
 (defn build []
   (let [provider (provider)
@@ -16,6 +16,8 @@
 
 
 ;; Interface
+
+
 (defn balance-of [^ethers/Contract c account]
   (ocall c :balanceOf account))
 

@@ -3,8 +3,8 @@
 (def debug?
   ^boolean goog.DEBUG)
 
-(def addresses 
-  {:velo-token "0x98ad9b32dd10f8d8486927d846d4df8baf39abe2" 
+(def addresses
+  {:velo-token "0x98ad9b32dd10f8d8486927d846d4df8baf39abe2"
    :uni-vlo-eth "0x259E558892783fd8941EBBeDa694318C1C3d9263"
    :bal-vlo-eth "0xE52E551141D29e4D08A826ff029059f1fB5F6f52"
    :timelock "0x22daA1F74A8785965E841270B9aED601F9eD310D"

@@ -15,8 +15,8 @@
   [:div.price-section
    [:div.section
     [:div.title "TRADING / METRICS"]
-    [:div.body 
-     [:div.gauge.vlo-token-price 
+    [:div.body
+     [:div.gauge.vlo-token-price
       [:div.title "VLO TOKEN PRICE"]
       [:div.value.green (frm/token-price  @(<su [::subs/token-price]))]]
      [:div.gauges.grid.halves.price-change
@@ -42,39 +42,35 @@
 
       [:div.gauge.column
        [:div.title "TOTAL SUPPLY"]
-       [:div.value (frm/si-prefix @(<su [::subs/token-total-supply]))]]]
-     ]]])
+       [:div.value (frm/si-prefix @(<su [::subs/token-total-supply]))]]]]]])
 
 (defn cond-value-sub [subscription placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
-  (if-let [v @(<su [subscription])] 
+  (if-let [v @(<su [subscription])]
     (fmtfn v)
-    [:div.connect-wallet 
-     [:span.placeholder placeholder]
-     [:span.subtext "CONNECT WALLET"]])
-  )
-
-
-(defn cond-value [v placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
-  (if v 
-    (fmtfn v)
-    [:div.connect-wallet 
+    [:div.connect-wallet
      [:span.placeholder placeholder]
      [:span.subtext "CONNECT WALLET"]]))
 
+(defn cond-value [v placeholder & [{:keys [fmtfn] :or {fmtfn identity}}]]
+  (if v
+    (fmtfn v)
+    [:div.connect-wallet
+     [:span.placeholder placeholder]
+     [:span.subtext "CONNECT WALLET"]]))
 
 (defn rebase-section []
   [:div.rebase-section
    [:div.section
     [:div.title "12H VELOCITY REBASE"]
-    [:div.body 
+    [:div.body
      [:div.gauges.grid.halves
       [:div.gauge.velocity.column
        [:div.title "VELOCITY"]
-       [:div.value 
-        [cond-value-sub ::subs/token-velocity-relative "0.00%" {:fmtfn frm/perc}] ]]
+       [:div.value
+        [cond-value-sub ::subs/token-velocity-relative "0.00%" {:fmtfn frm/perc}]]]
       [:div.gauge.countdown.column
        [:div.title "COUNTDOWN"]
-       [:div.value 
+       [:div.value
         [cond-value-sub ::subs/last-rebase-countdown "00:00:00"]]]]
 
      (let [msg (reagent/atom nil)
@@ -84,13 +80,13 @@
                      "Aren't we all eager to write history!"
                      "A bit impatient are we?"]
            on-click #(cond
-                       (pos? @(<su [::subs/last-rebase-counter])) 
+                       (pos? @(<su [::subs/last-rebase-counter]))
                        (reset! msg (rand-nth messages))
                        :else
                        (do
                          (reset! msg "Are you the one?")
                          (>ev [::events/web3-call-rebase])))]
-       [:div.wrapper 
+       [:div.wrapper
         [:div.rebase-button-section
          [:div.rocket.n0
           [:img {:src "/images/rocket-bg-0.svg"}]]
@@ -100,34 +96,32 @@
           [:img {:src "/images/rocket-bg-1.svg"}]]]
         [(fn []
            (when msg
-             [:div.message @msg]))]]
-       )]]])
+             [:div.message @msg]))]])]]])
 
 (defn menu-section []
   (let [eth-inj? @(<su [::subs/ethereum-injected?])
         address @(<su [::subs/web3-account-connected])]
     (when eth-inj?
       [:div#menu
-       [:ul 
-        [:li.connect 
+       [:ul
+        [:li.connect
          [:a {:href "#" :on-click #(>ev [::events/web3-connect])}
           (or address  "CONNECT")]]
-        [:li.add-token 
+        [:li.add-token
          [:a {:on-click #(>ev [::events/web3-add-token])} "ADD TOKEN"]]]])))
-
 
 (defn install-ethereum-compatible-wallet []
   (let [eth-inj? @(<su [::subs/ethereum-injected?])]
     (when-not eth-inj?
       [:div#install-ethereum-compatible-wallet
-       [:span 
+       [:span
         "Install an ETH compatible wallet like MetaMask"]])))
 
 (defn flash-message []
   (let [{:keys [message error type]} @(<su [::subs/flash-message])]
     (when message
       [:div#flash {:class (or type "error")}
-       [:span 
+       [:span
         message]
        (when error
          [:span.error-message
@@ -137,33 +131,32 @@
   [:div.stake-section
    [:div.seperator]
    [bind-fields  [:div.input-field
-                  [:div.balance 
+                  [:div.balance
                    [:a {:on-click #(swap! doc assoc :amount balance)} "BALANCE " [:span balance]]]
                   [:input {:field :numeric :id :amount}]
-                  [:div.grid.halves 
+                  [:div.grid.halves
                    [:div.cancel-button.column
                     [:a {:on-click #(reset! selected nil)} "CANCEL"]]
                    [:div.stake-button.column
-                    [:a {:on-click #(if (pos? (:amount @doc)) 
+                    [:a {:on-click #(if (pos? (:amount @doc))
                                       (>ev [::events/web3-mlp-stake (:amount @doc)])
-                                      (>ev [::events/flash {:type :warning 
-                                                            :message  "Can only stake positive amount"}]))} "STAKE"]]
-                   ]] doc]])
+                                      (>ev [::events/flash {:type :warning
+                                                            :message  "Can only stake positive amount"}]))} "STAKE"]]]] doc]])
 
 (defn yield-farming-section []
   (let [mlp-data @(<su [::subs/mises-legacy-pool-data])]
     [:div.yield-farming-section
      [:div.section
       [:div.title "YIELD FARMING SECTION"]
-      [:div.body 
+      [:div.body
        [:div.gauges
         [:div.gauge.mises-legacy-pool
          [:div.title "MISES LEGACY POOL APY"]
-         [:div.value [cond-value (:apy mlp-data) "00.00%" {:fmtfn #(frm/perc (* 100 %))}] ]]
+         [:div.value [cond-value (:apy mlp-data) "00.00%" {:fmtfn #(frm/perc (* 100 %))}]]]
 
         [:div.gauge.total-deposited
          [:div.title "TOTAL STAKED"]
-         [:div.value [cond-value (:total-staked mlp-data) "$00,000.00" {:fmtfn frm/money} ]]]
+         [:div.value [cond-value (:total-staked mlp-data) "$00,000.00" {:fmtfn frm/money}]]]
 
         [:p "STAKE VLO/ETH UNI-V2, EARN VLO"]
 
@@ -175,15 +168,14 @@
            [:div.gauges.grid.halves
             [:div.gauge.velocity.column
              [:div.title "STAKED USD"]
-             [:div.value [cond-value (:staked-usd mlp-data) "$00,000.00" {:fmtfn frm/money} ]]]
+             [:div.value [cond-value (:staked-usd mlp-data) "$00,000.00" {:fmtfn frm/money}]]]
             [:div.gauge.countdown.column
              [:div.title "$VLO EARNED"]
-             [:div.value [cond-value (:earned-vlo mlp-data) "000,000" {:fmtfn frm/si-prefix} ]]]]
-
+             [:div.value [cond-value (:earned-vlo mlp-data) "000,000" {:fmtfn frm/si-prefix}]]]]
 
            (let [selected (reagent/atom nil)
                  doc (reagent/atom {:amount 0.0})]
-             [:div.buttons 
+             [:div.buttons
 
               [(fn []
                  (case @selected
@@ -191,7 +183,7 @@
                    nil))]
 
               [(fn []
-                 (if-not @selected 
+                 (if-not @selected
                    [:div.buttons
                     [:div.staking-button-section.grid.halves
                      [:div.stake-button.column
@@ -201,85 +193,77 @@
 
                     [:div.harvest-button-section.grid.ones
                      [:div.harvest-button.column
-                      [:a {:on-click #(>ev [::events/web3-mlp-harvest])} "HARVEST"]]
-                     ]]))]])])]]]]))
+                      [:a {:on-click #(>ev [::events/web3-mlp-harvest])} "HARVEST"]]]]))]])])]]]]))
 
 (defn app-content []
-   [:div.app-content
+  [:div.app-content
     ;; informational messages
-    [install-ethereum-compatible-wallet]
-    [flash-message]
+   [install-ethereum-compatible-wallet]
+   [flash-message]
 
-    [menu-section]
-    [:div.logo 
-     [:img {:style 
-            {:transform (str "rotate(" @(<su [::subs/logo-rotation]) "deg)")} 
-            :src "/images/logo+border.svg"}]]
+   [menu-section]
+   [:div.logo
+    [:img {:style
+           {:transform (str "rotate(" @(<su [::subs/logo-rotation]) "deg)")}
+           :src "/images/logo+border.svg"}]]
 
-    [:div.logo-title
-     [:span "VELOTOKEN"]]
+   [:div.logo-title
+    [:span "VELOTOKEN"]]
 
-    [:div.white-paper.grid
-     [:a.column {:href "https://supermises.medium.com/velo-a-defi-experiment-in-austrian-economics-fair-farming-and-elasticity-4e0cc51058aa"
-                 :target "_velointro"} 
-      "Introduction"]
+   [:div.white-paper.grid
+    [:a.column {:href "https://supermises.medium.com/velo-a-defi-experiment-in-austrian-economics-fair-farming-and-elasticity-4e0cc51058aa"
+                :target "_velointro"}
+     "Introduction"]
 
-     [:a.column {:href "https://github.com/velo-finance/velo-protocol/blob/master/VELO_Whitepaper_v1.1.pdf" :target "_velowp"}
-      "WhitePaper"]
+    [:a.column {:href "https://github.com/velo-finance/velo-protocol/blob/master/VELO_Whitepaper_v1.1.pdf" :target "_velowp"}
+     "WhitePaper"]
 
-     [:a.column {:href "https://solidity.finance/audits/VELO/" :target "_veloaudit"}
-      "SolFin Audit"]
-     ]
+    [:a.column {:href "https://solidity.finance/audits/VELO/" :target "_veloaudit"}
+     "SolFin Audit"]]
 
-    [:div.white-paper.grid
-     [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
-      "Governance"]
+   [:div.white-paper.grid
+    [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
+     "Governance"]
 
-    [:a.column {:href "#" :on-click #(>ev [::events/show-modal true])} "Roadmap"]
-    ]
+    [:a.column {:href "#" :on-click #(>ev [::events/show-modal true])} "Roadmap"]]
 
-    [:div.main-section
+   [:div.main-section
 
-     [:div.social-sidebar
-      (letfn [(item [t u]
-                [:a {:href u :target t} [:img {:src (str "/images/socials/" t)}]])]
-        [:ul
-         [:li (item "twitter.svg" "https://twitter.com/Velotoken")]
-         [:li (item "telegram.svg" "https://t.me/Velotoken")]
-         [:li (item "medium.svg" "https://medium.com/@SuperMises")]
-         [:li (item "discord.svg" "https://discord.gg/rGnnKTR")]
-         [:li (item "github.svg" "https://github.com/velo-finance/velo-protocol")]
-         #_[:li (item "reddit.svg" "https://www.reddit.com/r/ethtrader/comments/kgivpu/velotoken_vlo_audit_shows_high_level_security_and/")]
-         ])] 
+    [:div.social-sidebar
+     (letfn [(item [t u]
+               [:a {:href u :target t} [:img {:src (str "/images/socials/" t)}]])]
+       [:ul
+        [:li (item "twitter.svg" "https://twitter.com/Velotoken")]
+        [:li (item "telegram.svg" "https://t.me/Velotoken")]
+        [:li (item "medium.svg" "https://medium.com/@SuperMises")]
+        [:li (item "discord.svg" "https://discord.gg/rGnnKTR")]
+        [:li (item "github.svg" "https://github.com/velo-finance/velo-protocol")]
+        #_[:li (item "reddit.svg" "https://www.reddit.com/r/ethtrader/comments/kgivpu/velotoken_vlo_audit_shows_high_level_security_and/")]])]
 
-     [price-section]
+    [price-section]
 
-     [:div.trading-sidebar
-      (letfn [(item [t u]
-                [:a {:href u :target t} [:img {:src (str "/images/trading/" t)}]])]
-        [:ul
-         [:li (item "uniswap.svg" "https://info.uniswap.org/pair/0x259E558892783fd8941EBBeDa694318C1C3d9263")]
-         [:li (item "dextools.svg" "https://www.dextools.io/app/uniswap/pair-explorer/0x259e558892783fd8941ebbeda694318c1c3d9263")]
-         [:li (item "coingecko.svg" "https://www.coingecko.com/en/coins/velo-token")]
-         [:li (item "coinmarketcap.svg" "https://coinmarketcap.com/currencies/velo-token/")]
-         ])]]
+    [:div.trading-sidebar
+     (letfn [(item [t u]
+               [:a {:href u :target t} [:img {:src (str "/images/trading/" t)}]])]
+       [:ul
+        [:li (item "uniswap.svg" "https://info.uniswap.org/pair/0x259E558892783fd8941EBBeDa694318C1C3d9263")]
+        [:li (item "dextools.svg" "https://www.dextools.io/app/uniswap/pair-explorer/0x259e558892783fd8941ebbeda694318c1c3d9263")]
+        [:li (item "coingecko.svg" "https://www.coingecko.com/en/coins/velo-token")]
+        [:li (item "coinmarketcap.svg" "https://coinmarketcap.com/currencies/velo-token/")]])]]
 
-    [rebase-section]
+   [rebase-section]
 
-    [yield-farming-section]
+   [yield-farming-section]
 
-    [:div#footer]])
+   [:div#footer]])
 
 (defn app-modal []
   [:div.app-modal {:on-click #(>ev [::events/show-modal false])}
-   [:img {:src "/images/info/roadmap.jpg"}]
-   ])
+   [:img {:src "/images/info/roadmap.jpg"}]])
 
 (defn main-panel []
   [:div.app-container
    [:div.app-bg]
    [app-content]
    (if @(<su [::subs/show-modal?])
-    [app-modal])
-  ]
-)
+     [app-modal])])

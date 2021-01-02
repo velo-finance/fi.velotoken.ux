@@ -8,7 +8,6 @@
   ; (and x (cljs.core/= (aget x "constructor" "name") "BigNumber"))
   (and x (aget x "toNumber")))
 
-
 (defn bignumber [n] (ethers/BigNumber.from (str n)))
 
 ;; (bignumber "100000000000000000000")
@@ -34,9 +33,9 @@
   [n u]
   (. ethers/utils formatUnits n u))
 
-#_ (format-units "100000000000000000000" 18) ;; => "100.0"
+#_(format-units "100000000000000000000" 18) ;; => "100.0"
 
-(defn format-ether 
+(defn format-ether
   "format-ether with unit ether"
   [n]
   (format-units n "ether"))
@@ -47,11 +46,11 @@
   [n u]
   (. ethers/utils parseUnits n u))
 
-#_ (parse-units "100" 18) ;; => #object[BigNumber 100000000000000000000]
+#_(parse-units "100" 18) ;; => #object[BigNumber 100000000000000000000]
 
 (defn parse-ether
   "parse-units with unit ether"
   [n]
   (parse-units n "ether"))
 
-#_ (parse-ether "2727.578608087181823502")
+#_(parse-ether "2727.578608087181823502")
