@@ -204,10 +204,7 @@
                       [:a {:on-click #(>ev [::events/web3-mlp-harvest])} "HARVEST"]]
                      ]]))]])])]]]]))
 
-
-(defn main-panel []
-  [:div.app-container
-   [:div.app-bg]
+(defn app-content []
    [:div.app-content
     ;; informational messages
     [install-ethereum-compatible-wallet]
@@ -237,7 +234,9 @@
     [:div.white-paper.grid
      [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
       "Governance"]
-     ]
+
+    [:a.column {:href "#" :on-click #(>ev [::events/show-modal true])} "Roadmap"]
+    ]
 
     [:div.main-section
 
@@ -269,4 +268,18 @@
 
     [yield-farming-section]
 
-    [:div#footer]]])
+    [:div#footer]])
+
+(defn app-modal []
+  [:div.app-modal {:on-click #(>ev [::events/show-modal false])}
+   [:img {:src "/images/info/roadmap.jpg"}]
+   ])
+
+(defn main-panel []
+  [:div.app-container
+   [:div.app-bg]
+   [app-content]
+   (if @(<su [::subs/show-modal?])
+    [app-modal])
+  ]
+)

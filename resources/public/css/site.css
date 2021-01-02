@@ -375,6 +375,38 @@ body {
   width: 100vw;
   height: 100vh;
 }
+.app-modal {
+  background: rgba(245, 245, 245, 0.4);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  -webkit-animation: fade-in 0.2s;
+  /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fade-in 0.2s;
+  /* Firefox < 16 */
+  -ms-animation: fade-in 0.2s;
+  /* Internet Explorer */
+  -o-animation: fade-in 0.2s;
+  /* Opera < 12.1 */
+  animation: fade-in 0.2s;
+}
+.app-modal img {
+  display: block;
+  max-width: 80%;
+  margin: 30px auto;
+  z-index: 2;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
 .app-content {
   position: relative;
   min-height: 800px;

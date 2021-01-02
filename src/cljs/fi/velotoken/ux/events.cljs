@@ -124,6 +124,12 @@
   (fn [db]
     (assoc db :logo-rotation (* 360 (int (rand 10))))))
 
+;; show modal with Roadmap
+(re-frame/reg-event-db
+  ::show-modal
+  (fn [db [_ show]]
+    (assoc db :show-modal show)))
+
 ;; Coingecko update
 
 (re-frame/reg-event-fx
