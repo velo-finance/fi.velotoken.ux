@@ -564,6 +564,8 @@ body {
   margin: 0;
 }
 .main-section .sidebar ul li {
+  display: flex;
+  justify-content: center;
   padding: 4px;
   margin-bottom: 14px;
   opacity: 0.4;
@@ -585,6 +587,8 @@ body {
   margin: 0;
 }
 .main-section .social-sidebar ul li {
+  display: flex;
+  justify-content: center;
   padding: 4px;
   margin-bottom: 14px;
   opacity: 0.4;
@@ -609,6 +613,8 @@ body {
   margin: 0;
 }
 .main-section .trading-sidebar ul li {
+  display: flex;
+  justify-content: center;
   padding: 4px;
   margin-bottom: 14px;
   opacity: 0.4;
@@ -725,9 +731,11 @@ body {
 }
 .section .body .gauge .value.red {
   color: #D0021B;
+  font-weight: 700;
 }
 .section .body .gauge .value.green {
   color: #7ED321;
+  font-weight: 700;
 }
 .section .body .gauge.vlo-token-price {
   margin-top: -5px;
