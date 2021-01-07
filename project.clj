@@ -13,7 +13,8 @@
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [binaryage/oops "0.7.0"]
                  [reagent-forms "0.5.44"]
-                 ]
+                 [org.clojars.akiel/async-error "0.3"]]
+
 
   :plugins [[lein-shadow "0.3.1"]
             [lein-shell "0.5.0"]

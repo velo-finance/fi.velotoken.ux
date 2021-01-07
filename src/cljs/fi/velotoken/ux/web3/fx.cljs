@@ -3,6 +3,7 @@
    [re-frame.core :refer [reg-fx dispatch]]
    [cljs.core.async :refer [go <!]]
    [cljs.core.async.interop :refer-macros [<p!]]
+   [async-error.core :refer-macros [<?]]
 
    [oops.core :refer [oget ocall]]
 
@@ -10,7 +11,7 @@
    [fi.velotoken.ux.events :as events]
    [fi.velotoken.ux.numbers :as numbers]
    [fi.velotoken.ux.web3.bignumber :as bignumber]
-   [fi.velotoken.ux.web3.provider :refer [provider]]
+   [fi.velotoken.ux.web3.provider :refer [provider connect disconnect]]
    [fi.velotoken.ux.web3.contract.rebaser :as rebaser]
    [fi.velotoken.ux.web3.contract.mises-legacy-pool :as mlp-c]
    [fi.velotoken.ux.web3.contract.uniswap-vlo-eth :as uve-c]
@@ -23,42 +24,39 @@
 
 (defmethod web3-method :connect []
   (go
-    (try
-      (let [accounts (<p! (js/ethereum.request #js {:method "eth_requestAccounts"}))]
-        (if (empty? accounts)
-        ;; metamask is locked
-          (dispatch [::events/web3-locked])
-          (dispatch [::events/web3-accounts-changed (js->clj accounts)])))
-      (catch js/Error e
-        (let [message  (oget e :cause.message)]
-          (dispatch [::events/flash {:type :warning :message message}]))))))
+    ;; NOTE: when not using exists? we get an not defined error
+    (let [pvdr 
+          (u/try-flash! :error "Problem connecting"
+                        (<? (connect)))]
+      (if-not pvdr 
+        (dispatch [::events/web3-ethereum-not-present])
+        (do
+          ;; register events of interest
+          (.on pvdr "accountsChanged" (fn [accounts] (dispatch [::events/web3-accounts-changed (js->clj accounts)])))
+          (.on pvdr "chainChanged" (fn [chain-id] (dispatch [::events/web3-chain-changed (js->clj chain-id)])))
+          (.on pvdr "networkChanged" (fn [chain-id] (dispatch [::events/web3-network-changed (js->clj chain-id)])))
+          (.on pvdr "connect" (fn [connect-info] (dispatch [::events/web3-connected (js->clj connect-info)])))
+          ;; RPC Error {:message .., :code .., :data ..}
+          (.on pvdr "disconnect" (fn [rpc-error] (dispatch [::events/web3-disconnect (js->clj rpc-error)])))
+          (.on pvdr "message" (fn [message] (dispatch [::events/web3-message (js->clj message)])))
 
-(defmethod web3-method :initialize []
+          ;; lets try to get the address of the signer
+          ;; if we have none, it means we have no account
+          ;; connected. If we have one, metamask is connected
+          ;; and we initialize with that address
+          (try
+            (let [signer (ocall pvdr :getSigner)
+                  address (<p! (ocall signer :getAddress))]
+              (dispatch [::events/web3-initialized {:accounts [address]}]))
+            (catch js/Error _
+              (dispatch [::events/web3-initialized {:accounts []}]))))))))
 
+(defmethod web3-method :disconnect []
   (go
     ;; NOTE: when not using exists? we get an not defined error
-    (if-not (exists? js/ethereum)
-      (dispatch [::events/web3-ethereum-not-present])
-      (do
-        ;; register events of interest
-        (js/ethereum.on "accountsChanged" (fn [accounts] (dispatch [::events/web3-accounts-changed (js->clj accounts)])))
-        (js/ethereum.on "chainChanged" (fn [chain-id] (dispatch [::events/web3-chain-changed (js->clj chain-id)])))
-        (js/ethereum.on "connect" (fn [connect-info] (dispatch [::events/web3-connected (js->clj connect-info)])))
-        ;; RPC Error {:message .., :code .., :data ..}
-        (js/ethereum.on "disconnect" (fn [rpc-error] (dispatch [::events/web3-disconnect (js->clj rpc-error)])))
-        (js/ethereum.on "message" (fn [message] (dispatch [::events/web3-message (js->clj message)])))
-
-        ;; lets try to get the address of the signer
-        ;; if we have none, it means we have no account
-        ;; connected. If we have one, metamask is connected
-        ;; and we initialize with that address
-        (try
-          (let [provider (provider)
-                signer (ocall provider :getSigner)
-                address (<p! (ocall signer :getAddress))]
-            (dispatch [::events/web3-initialized {:accounts [address]}]))
-          (catch js/Error _
-            (dispatch [::events/web3-initialized {:accounts []}])))))))
+    (u/try-flash! :error "Problem disconnecting"
+                  (<? (disconnect))
+                  (dispatch [::events/web3-disconnected]))))
 
 (defmethod web3-method :add-token [[_ token-info]]
   (go
@@ -72,16 +70,18 @@
 
 (defmethod web3-method :mises-legacy-pool-data [[_ {:keys [velo-price address]}]]
   (go
-    (let [mlp (mises-legacy-pool/build velo-price)]
-      (dispatch [::events/web3-mises-legacy-pool-data-recv
-                 (cond->  {:apy (<! (mises-legacy-pool/annual-perc-yield mlp))
-                           :apr (<! (mises-legacy-pool/annual-perc-rate mlp))
-                           :total-staked (<! (mises-legacy-pool/total-staked-usd mlp))}
-                   (seq address)
-                   (assoc :staked-usd (<! (mises-legacy-pool/staked-usd mlp address))
-                          :earned-vlo (<! (mises-legacy-pool/earned-vlo mlp address))
-                          :balance-uve-lp-tokens
-                          (<! (mises-legacy-pool/balance-uve-lp-tokens mlp address))))]))))
+    (if-not (provider)
+      (dispatch [::events/web3-mises-legacy-pool-data-not-ready])
+      (let [mlp (mises-legacy-pool/build velo-price)]
+        (dispatch [::events/web3-mises-legacy-pool-data-recv
+                   (cond->  {:apy (<! (mises-legacy-pool/annual-perc-yield mlp))
+                             :apr (<! (mises-legacy-pool/annual-perc-rate mlp))
+                             :total-staked (<! (mises-legacy-pool/total-staked-usd mlp))}
+                     (seq address)
+                     (assoc :staked-usd (<! (mises-legacy-pool/staked-usd mlp address))
+                            :earned-vlo (<! (mises-legacy-pool/earned-vlo mlp address))
+                            :balance-uve-lp-tokens
+                            (<! (mises-legacy-pool/balance-uve-lp-tokens mlp address))))])))))
 
 #_(web3-method [:mises-legacy-pool-data {:velo-price 0.0167}])
 #_(web3-method [:mises-legacy-pool-data {:velo-price 0.0167 :address "0x.."}])

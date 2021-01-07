@@ -16,27 +16,15 @@
  (fn [_ _]
    {:db db/default-db
     :dispatch [::coingecko-sync]
-    :web3 [:initialize]
+    ;; :web3 [:connect]
     :dispatch-interval-multiple
-    [{:dispatch [::update-last-rebase-counter]
-      :id :last-rebase-counter
-      :ms 1000}
-     {:dispatch [::flash-update]
+    [{:dispatch [::flash-update]
       :id :flash-update
       :ms 1000}
-     ;; reload rebase-data each x seconds
-     {:dispatch [::web3-velo-rebase-data]
-      :id :flash-update
-      :ms 10000}
      ;; reload coingecko-data each x seconds
      {:dispatch [::coingecko-sync]
       :id ::coingecko-update
-      :ms 30000}
-     ;; NOTE: disabled, as we are firing the legacy
-     ;; pool data update event after coingecko update
-     #_{:dispatch [::web3-mises-legacy-pool-data]
-        :id :mises-legacy-pool-update
-        :ms 10000}]}))
+      :ms 30000}]}))
 
 (re-frame/reg-event-fx
  ::web3-initialized
@@ -44,7 +32,15 @@
    {:db (-> db
             (assoc :ethereum-injected? true)
             (assoc :accounts accounts))
-    :dispatch [::web3-mises-legacy-pool-data]
+    :dispatch [::coingecko-sync]
+    :dispatch-interval-multiple
+    [{:dispatch [::update-last-rebase-counter]
+      :id :last-rebase-counter
+      :ms 1000}
+     ;; reload rebase-data each x seconds
+     {:dispatch [::web3-velo-rebase-data]
+      :id :velo-rebase-data
+      :ms 10000}]
     :web3-multiple [[:velo-rebase-data]]}))
 
 (re-frame/reg-event-db
@@ -102,7 +98,7 @@
 
 ;; Error messages
 (defn flash [db ftype message & [error]]
-  (assoc db :flash {:type ftype :message message :error error :duration 5}))
+  (assoc db :flash {:type ftype :message message :error error :duration 3}))
 
 (re-frame/reg-event-db
  ::flash
@@ -185,6 +181,18 @@
  (fn [_ _]
    {:web3 [:connect]}))
 
+(re-frame/reg-event-fx
+ ::web3-disconnect
+ (fn [_ _]
+   {:web3 [:disconnect]}))
+
+(re-frame/reg-event-fx
+ ::web3-disconnected
+ (fn [{:keys [db]} _]
+   {:db (assoc db :accounts [])
+    :clear-interval-multiple 
+    [{:id :velo-rebase-data}]}))
+
 (re-frame/reg-event-db
  ::web3-locked
  (fn [db _]
@@ -206,11 +214,6 @@
  ::web3-connected
  (fn [_ [_ connect-info]]
    (prn "connection-info" connect-info)))
-
-(re-frame/reg-event-db
- ::web3-disconnect
- (fn [_ [_ rpc-error]]
-   (prn "disconnected" rpc-error)))
 
 (re-frame/reg-event-db
  ::web3-message

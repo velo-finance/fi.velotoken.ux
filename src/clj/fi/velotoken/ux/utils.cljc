@@ -13,11 +13,11 @@
   `(try
      ~@p
      (catch js/Error e#
-       (let [error# (oops.core/oget e# :?cause.?message)]
-         (prn [:fi.velotoken.ux.events/flash
-               {:type ~ftype
-                :message ~message
-                :error error#}])
+       (let [error# (or 
+                      (let [cause# (oops.core/oget e# :?cause)]
+                        (and (string? cause#) cause#))
+                      (oops.core/oget e# :?cause.?message)
+                      (oops.core/oget e# :?message))]
          (re-frame.core/dispatch [:fi.velotoken.ux.events/flash
                                   {:type ~ftype
                                    :message ~message

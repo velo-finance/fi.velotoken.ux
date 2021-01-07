@@ -15,6 +15,12 @@
   (let [interval-id (js/setInterval #(re-frame/dispatch dispatch) ms)]
     (swap! registered-keys assoc id interval-id)))
 
+(defn clear-interval [{:keys [:id]}]
+  (when-let [interval-id (get @registered-keys id)]
+    (js/clearInterval interval-id)
+    (swap! registered-keys dissoc id)))
+
+
 (reg-fx
  :dispatch-interval
  register-interval)
@@ -24,9 +30,13 @@
           (doseq [i intervals]
             (register-interval i))))
 
+  
+
 (reg-fx
  :clear-interval
- (fn [{:keys [:id]}]
-   (when-let [interval-id (get @registered-keys id)]
-     (js/clearInterval interval-id)
-     (swap! registered-keys dissoc id))))
+ clear-interval)
+
+(reg-fx :clear-interval-multiple
+        (fn [intervals]
+          (doseq [i intervals]
+            (clear-interval i))))
