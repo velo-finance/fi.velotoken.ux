@@ -20,7 +20,7 @@
 (re-frame/reg-sub
  ::show-modal?
  (fn [db]
-   (or (:show-modal db))))
+   (:show-modal db)))
 
 (re-frame/reg-sub
  ::ethereum-injected?

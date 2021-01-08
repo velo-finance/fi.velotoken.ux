@@ -3,6 +3,7 @@
    [re-frame.core :as re-frame]
    [reagent.core :as reagent]
    [reagent-forms.core :refer [bind-fields]]
+   [cljs.core.async :refer [go <! timeout]]
 
    [fi.velotoken.ux.subs :as subs]
    [fi.velotoken.ux.events :as events]
@@ -197,7 +198,7 @@
 
 (defn app-content []
   [:div.app-content
-    ;; informational messages
+   ;; informational messages
    [install-ethereum-compatible-wallet]
    [flash-message]
 
@@ -222,10 +223,14 @@
      "SolFin Audit"]]
 
    [:div.white-paper.grid
+    [:a.column]
     [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
      "Governance"]
+    [:a.column {:href "#" :on-click #(>ev [::events/show-modal :roadmap])} "Roadmap"]
+    [:a.column]]
 
-    [:a.column {:href "#" :on-click #(>ev [::events/show-modal true])} "Roadmap"]]
+   [:div.in-your-face-buttons 
+         [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGRAPHIC"]]
 
    [:div.main-section
 
@@ -257,13 +262,17 @@
 
    [:div#footer]])
 
-(defn app-modal []
-  [:div.app-modal {:on-click #(>ev [::events/show-modal false])}
-   [:img {:src "/images/info/roadmap.jpg"}]])
+(defn app-modal [modal]
+  [:div.app-modal {:on-click #(>ev [::events/show-modal :hide])}
+   (case modal
+     :roadmap [:img {:src "/images/info/roadmap.jpg"}]
+     :infographic [:img {:src "/images/infographic@1000.jpg"}]
+     [:span "Unsupported modal"]
+   )])
 
 (defn main-panel []
   [:div.app-container
    [:div.app-bg]
    [app-content]
-   (if @(<su [::subs/show-modal?])
-     [app-modal])])
+   (when-let [modal @(<su [::subs/show-modal?])]
+     [app-modal modal])])

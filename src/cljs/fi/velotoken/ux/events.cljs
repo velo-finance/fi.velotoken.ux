@@ -126,7 +126,9 @@
 (re-frame/reg-event-db
  ::show-modal
  (fn [db [_ show]]
-   (assoc db :show-modal show)))
+   (case show
+     :hide (dissoc db :show-modal)
+     (assoc db :show-modal show))))
 
 ;; Coingecko update
 
