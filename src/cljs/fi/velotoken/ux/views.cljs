@@ -196,6 +196,17 @@
                      [:div.harvest-button.column
                       [:a {:on-click #(>ev [::events/web3-mlp-harvest])} "HARVEST"]]]]))]])])]]]]))
 
+(defn intro-video []
+  [:div.intro-video
+   [:iframe
+    {:allowfullscreen "allowfullscreen",
+     :allow "autoplay; fullscreen",
+     :frameborder "0",
+     :height "360",
+     :width "640",
+     :src "https://player.vimeo.com/video/498497945"}]
+   ])
+
 (defn app-content []
   [:div.app-content
    ;; informational messages
@@ -228,6 +239,9 @@
      "Governance"]
     [:a.column {:href "#" :on-click #(>ev [::events/show-modal :roadmap])} "Roadmap"]
     [:a.column]]
+
+
+   [intro-video]
 
    [:div.in-your-face-buttons 
          [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGRAPHIC"]]
