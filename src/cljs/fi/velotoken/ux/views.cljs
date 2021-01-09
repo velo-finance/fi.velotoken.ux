@@ -241,7 +241,7 @@
     [:a.column]]
 
 
-   [intro-video]
+   #_ [intro-video]
 
    [:div.in-your-face-buttons 
          [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGRAPHIC"]]
