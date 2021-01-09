@@ -204,8 +204,7 @@
      :frameborder "0",
      :height "360",
      :width "640",
-     :src "https://player.vimeo.com/video/498497945"}]
-   ])
+     :src "https://player.vimeo.com/video/498497945"}]])
 
 (defn app-content []
   [:div.app-content
@@ -241,10 +240,10 @@
     [:a.column]]
 
 
-   #_ [intro-video]
+   #_[intro-video]
 
    [:div.in-your-face-buttons 
-         [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGRAPHIC"]]
+    [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGRAPHIC"]]
 
    [:div.main-section
 
@@ -281,8 +280,7 @@
    (case modal
      :roadmap [:img {:src "/images/info/roadmap.jpg"}]
      :infographic [:img {:src "/images/infographic@1000.jpg"}]
-     [:span "Unsupported modal"]
-   )])
+     [:span "Unsupported modal"])])
 
 (defn main-panel []
   [:div.app-container
