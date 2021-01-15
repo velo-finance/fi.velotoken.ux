@@ -234,15 +234,14 @@
 
    [:div.white-paper.grid
     [:a.column]
-    [:a.column {:href "https://snapshot.page/#/velotoken" :target "_velogovernance"}
+    [:a.column {:href "https://snapshot.page/#/velotoken.eth" :target "_velogovernance"}
      "Governance"]
     [:a.column {:href "#" :on-click #(>ev [::events/show-modal :roadmap])} "Roadmap"]
     [:a.column]]
 
-
    #_[intro-video]
 
-   [:div.in-your-face-buttons 
+   [:div.in-your-face-buttons
     [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGRAPHIC"]]
 
    [:div.main-section
