@@ -242,7 +242,10 @@
    #_[intro-video]
 
    [:div.in-your-face-buttons
-    [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGRAPHIC"]]
+    [:a.column.defiyield-audit {:href "https://defiyield.info/assets/pdf/Velotoken.pdf", :target "_veloaudit"}
+     [:img {:src "/images/defi-yield-logo.png"}]
+     "AUDIT"]
+    [:a.column.infographic {:href "#" :on-click #(>ev [::events/show-modal :infographic])} "INFOGFX"]]
 
    [:div.main-section
 
